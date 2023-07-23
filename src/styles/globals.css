@@ -1,0 +1,33 @@
+:root {
+  --light-blue: #0442b8;
+  --dark-blue: #022577;
+  --yellow-color-400: #eeb104;
+  
+  --bg-gradient: linear-gradient(var(--light-blue) 40%, var(--dark-blue));
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  color: white;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  background: var(--bg-gradient);
+}
+
+#__next {
+  width: 100%;
+  height: 100%;
+}
+
+main {
+  width: 100%;
+  height: 100%;
+}
+
+
