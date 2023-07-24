@@ -22,7 +22,7 @@ export default function MusicList () {
     
     return <Flex w={'100%'} p={isUnder600 ? '0.5rem' : '1rem'}>
         <Flex margin={'0 auto'} maxW={'1400px'} w={'100%'}
-            flexDir={'column'}
+            flexDir={'column'} 
         >
 
             <Center>
