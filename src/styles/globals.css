@@ -2,8 +2,9 @@
   --light-blue: #0442b8;
   --dark-blue: #022577;
   --yellow-color-400: #eeb104;
-  
+
   --bg-gradient: linear-gradient(var(--light-blue) 40%, var(--dark-blue));
+  --input-placeholder-color: #7d8590b9;
 }
 
 * {
@@ -31,3 +32,18 @@ main {
 }
 
 
+.inherit-parent-icon {
+  color: inherit !important;
+}
+
+.inherit-parent-icon path {
+  color: inherit !important;
+}
+
+.inherit-parent-icon > g  {
+  color: inherit !important;
+}
+
+.inherit-parent-icon polygon {
+  color: inherit !important;
+}

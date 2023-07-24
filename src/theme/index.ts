@@ -17,6 +17,47 @@ const theme = extendTheme({
     fonts: {
         body: ubuntuFont.style.fontFamily,
         heading: ubuntuFont.style.fontFamily
+    },
+    components: {
+        Input: {
+            variants: {
+              outline: {
+                field: {
+                  bg: "white",
+                  color: "black",
+                  _placeholder: {
+                    color: "var(--input-placeholder-color)",
+                  },
+                  _focus: {
+                    borderColor: "white",
+                  },
+                  _invalid: {
+                    borderColor: "red.200",
+                  }
+                },
+              },
+            },
+        },
+        Table: {
+            variants: {
+              simple: {
+                th: {
+                  color: "white",
+                  fontWeight: "bold",
+                  textAlign: 'center',
+                  border: 'none',
+                  borderColor: 'blackAlpha.600',
+                  bg: "var(--light-blue)",
+                },
+                td: {
+                  padding: '0.3rem',
+                  color: "blackAlpha.800",
+                  borderColor: 'blackAlpha.400',
+                  textAlign: 'center',
+                },
+              }
+            }
+        },
     }
 })
 

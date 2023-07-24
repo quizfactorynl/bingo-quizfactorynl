@@ -1,5 +1,6 @@
 import { Box, Button, Flex, Heading, BoxProps, useMediaQuery } from "@chakra-ui/react"
 import VerificationCodeInput from "./design/VerificationCodeInput"
+import Footer from "./Footer";
 
 export default function Entry () {
     return <>
@@ -26,21 +27,6 @@ export default function Entry () {
         </Flex>
     </>
 }
-
-const Footer = (props: BoxProps)=> {
-
-    const [isUnder600] = useMediaQuery("(max-width: 600px)")
-
-    return <Box {...props}>
-        <Heading fontWeight={700} fontSize={isUnder600 ? '3.5rem' :'4.5rem'} textAlign={'center'}>
-            QUIZ
-        </Heading>
-        <Heading fontWeight={"normal"} fontSize={isUnder600 ? '2xl': '3xl'} textAlign={'center'} ml={'10px'}>
-            FACTORY
-        </Heading>
-    </Box>
-};
-
 
 
 
