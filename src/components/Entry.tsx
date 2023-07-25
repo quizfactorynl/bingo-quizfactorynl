@@ -2,7 +2,11 @@ import { Box, Button, Flex, Heading, BoxProps, useMediaQuery } from "@chakra-ui/
 import VerificationCodeInput from "./design/VerificationCodeInput"
 import Footer from "./Footer";
 
-export default function Entry () {
+export default function Entry ({
+    onValidate
+}: {
+    onValidate: ()=> void
+}) {
     return <>
         <Flex flexDir={'column'} w={'100%'} 
             justifyContent={'center'} alignItems={'center'} 
@@ -11,7 +15,10 @@ export default function Entry () {
             <Heading textAlign={'center'}>
             Vul de toeganscode in
             </Heading>
-            <form onSubmit={(e)=> e.preventDefault()} 
+            <form onSubmit={(e)=> {
+                e.preventDefault()
+                onValidate()
+            }} 
                 style={{ display: 'flex', gap: '1rem', alignItems: 'center', flexDirection:'column'}}
             >
                 <VerificationCodeInput />

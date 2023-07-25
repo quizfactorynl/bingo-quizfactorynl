@@ -1,7 +1,7 @@
-import { Ubuntu } from "next/font/google";
+import { Montserrat } from "next/font/google";
 
-
-export const ubuntuFont = Ubuntu({
-    subsets: ["greek"],
+export const montserratFont = Montserrat({
+    subsets: ["latin"],
     weight: ["400","500","700"]
 });
+

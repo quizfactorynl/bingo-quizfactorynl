@@ -1,5 +1,5 @@
 import { extendTheme } from "@chakra-ui/react";
-import { ubuntuFont } from "./fonts";
+import { montserratFont } from "./fonts";
 
 const theme = extendTheme({
     styles: {
@@ -15,8 +15,8 @@ const theme = extendTheme({
         }
     },
     fonts: {
-        body: ubuntuFont.style.fontFamily,
-        heading: ubuntuFont.style.fontFamily
+        body: montserratFont.style.fontFamily,
+        heading: montserratFont.style.fontFamily
     },
     components: {
         Input: {
