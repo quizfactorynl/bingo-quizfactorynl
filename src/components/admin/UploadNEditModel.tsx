@@ -18,7 +18,7 @@ export default function UploadNEditModel (
           <DrawerBody>
             {!editItem ? 
                 <UploadForm onUpload={handler.onClose || (()=>{})} /> : 
-                <UploadForm onUpload={handler.onClose || (()=>{})} />
+                <EditForm onUpload={handler.onClose || (()=>{})}  editItem={editItem}/>
             }
           </DrawerBody>
         </DrawerContent>
@@ -34,7 +34,7 @@ const EditForm = (
         handleSubmit,
         reset
     } = useForm();
-
+    
     const [loading, setLoading] = useState<boolean>(false);
 
     return <form style={{ display:'flex', flexDirection: 'column', gap: '1rem'}}
