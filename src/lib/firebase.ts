@@ -2,7 +2,7 @@
 
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
-import { arrayUnion, collection, doc, getDoc, getFirestore, setDoc, updateDoc } from 'firebase/firestore';
+import { arrayUnion, collection, deleteDoc, doc, getCountFromServer, getDoc, getFirestore, query, setDoc, updateDoc, where } from 'firebase/firestore';
 
 import type { FirebaseApp } from 'firebase/app';
 import type { Auth } from 'firebase/auth';
@@ -66,4 +66,80 @@ export function updateMusic (doc_id: string, title: string, artist: string) {
       title,
       artist
    });
+}
+
+
+export const bingosColRef = collection(firebase.firebaseStore, 'bingos');
+export const refCodeColRef = collection(firebase.firebaseStore, 'refCodes');
+
+export const deleteRefCode = (id: string)=> {
+   const docRef = doc(refCodeColRef, id)
+   return deleteDoc(docRef)
+}
+
+export const uploadRefCode = async (code: string, bingo_id: string, 
+   onSuccess: ()=> void, onFail: (reason: string)=> void
+)=> {
+   
+   // check if bingo exists
+   const res = await getCountFromServer(query(bingosColRef, where('id', '==', bingo_id)))
+
+   if (res.data().count == 0) {
+      onFail("Bingo not found")
+      return
+   }
+   
+   const docRef = doc(refCodeColRef, code)
+   try {
+      await setDoc(docRef, {
+         id: code,
+         code,
+         bingo_id
+      });
+      onSuccess()
+   } catch(err) {
+      onFail("Code already exists")
+      return
+   }
+}
+
+export const uploadBingo = async (title: string,
+   onFail: ()=> void, onSuccess: ()=> void
+)=> {
+   const docRef = doc(bingosColRef)
+
+   const res = await getCountFromServer(query(bingosColRef, where('title', '==', title)))
+   if (res.data().count > 0) {
+      onFail()
+      return
+   }
+
+   await setDoc(docRef, {
+      id: docRef.id,
+      title
+   });
+   onSuccess()
+}
+
+export const updateBingo = async (
+   doc_id: string, title: string,
+   onFail: ()=> void, onSuccess: ()=> void
+)=> {
+   const res = await getCountFromServer(query(bingosColRef, where('title', '==', title)))
+   if (res.data().count > 0) {
+      onFail()
+      return
+   }
+
+   const docRef = doc(bingosColRef, doc_id)
+   await updateDoc(docRef, {
+      id: docRef.id,
+      title
+   });
+   onSuccess()
+}
+
+export const deleteBingo = (id: string)=> {
+   const docRef = doc(bingosColRef, id)
+   return deleteDoc(docRef)
 }

@@ -1,5 +1,7 @@
+import { ObjectId } from "mongodb";
+
 export interface BingoDocType {
-    _id: string
+    _id: string | ObjectId
     title: string
 }
 

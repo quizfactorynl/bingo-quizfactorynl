@@ -18,19 +18,26 @@ export default async function handler(
             // post single document with
             const { title } = req.body;
 
+            // Check if a document with the same title already exists
+            const existingDocument = await collection.findOne({ title });
+
+            if (existingDocument) {
+              return res.status(409).json({ error: "Duplicate entry" });
+            }
+            
             // Insert the new document with the provided title as the _id
-            const newDocument = { _id: title, title };
+            const newDocument = { title };
             const result = await collection.insertOne(newDocument);
             res.status(201).json(result);
-        break; 
+        return;
         case "GET":
             // Send all docs from collection
             const docs = await collection.find({}).toArray();
             res.status(200).json(docs);
-        break;
+        return;
         case "DELETE":
-            const delRes = await collection.deleteOne()
-        break;
+            // const delRes = await collection.deleteOne({ _id: req.body.id });
+        return;
         
         default:
             res.setHeader("Allow", ["POST", "GET"]);

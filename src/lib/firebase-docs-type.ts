@@ -4,8 +4,15 @@ export interface MusicDocType {
     artist: string;
 }
 
-
 export interface BingoDocType {
-    name: string;
-    
+    id: string;
+    title: string;
 }
+
+export interface RefCodeDocType {
+    code: string;
+    id: string;
+    bingo_id: string;
+    bingo_name?: string;
+}
+

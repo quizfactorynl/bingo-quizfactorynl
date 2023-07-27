@@ -1,10 +1,19 @@
-import { Flex, PinInput, PinInputField } from "@chakra-ui/react";
+import { Flex, PinInput, PinInputField, PinInputProps } from "@chakra-ui/react";
 
-export default function VerificationCodeInput() {
+interface VerificationCodeInputProps {
+  value: string;
+  onChange: (value: string) => void;
+}
 
+export default function VerificationCodeInput({ 
+  inputProps
+}: {
+  inputProps?: VerificationCodeInputProps
+}) {
+  
   return (
     <Flex gap={"0.5rem"}>
-      <PinInput size={'lg'} placeholder="" autoFocus={true} onChange={(e)=> console.log(e)}>
+      <PinInput {...inputProps} size={'lg'} placeholder="" autoFocus={true}  >
       <PinInputField bg={'white'} color={'blackAlpha.900'}/>
       <PinInputField bg={'white'} color={'blackAlpha.900'}/>
       <PinInputField bg={'white'} color={'blackAlpha.900'}/>
@@ -14,3 +23,4 @@ export default function VerificationCodeInput() {
     </Flex>
   );
 }
+
