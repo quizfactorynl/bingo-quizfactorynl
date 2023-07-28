@@ -23,7 +23,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 }
 
 export default function index({ musics }: { musics: MusicDocType[]}) {
-  
+  console.log(musics);
   return <MainLayout pageTitle="Bingo - Admin" mainProps={{ className: `${montserratFont.className}`}}>
      <Musics musics={musics}/>
   </MainLayout>

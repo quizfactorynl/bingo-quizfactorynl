@@ -3,7 +3,7 @@ import { Flex, useDisclosure } from "@chakra-ui/react";
 // import UploadNEditModel from "./UploadNEditModel";
 // import MusicList from "./MusicList";
 
-import type { BingoDocType, MusicDocType } from "@/lib/mongodb-schema";
+import type { MusicDocType } from "@/lib/mongodb-schema";
 import { useState } from "react";
 import UploadNEditModel from "./UploadNEditModel";
 import MusicList from "./MusicList";
@@ -14,11 +14,12 @@ export default function Musics ({
     musics: MusicDocType[]
 }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const [, setBingoList] = useState<BingoDocType[]>(musics);
+    const [ musicList, setMusicList] = useState<MusicDocType[]>(musics);
 
     return <Flex flexDirection={'column'} background={'var(--bg-gradient)'} minH={'100%'}>
         <Navbar onAddBtnClick={onOpen}/>
-        <MusicList />
+        <MusicList musicState={[musicList, setMusicList]} />
         <UploadNEditModel   handler={{ isOpen, onOpen, onClose }}/>
     </Flex>
 }
+

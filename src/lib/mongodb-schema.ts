@@ -6,7 +6,7 @@ export interface BingoDocType {
 }
 
 export interface MusicDocType {
-    _id: string;
+    _id?: string;
     bingo_id: string;
     title: string;
     artist: string;

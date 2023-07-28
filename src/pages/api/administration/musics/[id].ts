@@ -40,34 +40,32 @@ export default async function handler(
 
     const client = await clientPromise;
     const db = client.db("bingo-db");
-    const bingoCollection = db.collection<BingoDocType>(COLLECTIONS.BINGOS);
-
-    // Fetch the bingo by ID
-    const bingo = await bingoCollection.findOne({ _id: id });
-
-    if (!bingo) {
-      return res.status(404).json({ error: "Bingo not found." });
-    }
 
     const { title, artist, bingo_id } = req.body;
-    const _id = `${title}-${artist}-${bingo_id}`;
-
-
-    // Create the music document
-    const musicData: MusicDocType = {
-        _id,
-        title,
-        artist,
-        bingo_id
-    };
-    
     const musicCollection = db.collection<MusicDocType>(COLLECTIONS.MUSICS);
-    const result = await musicCollection.insertOne(musicData);
+    // Check if music already exists
+    const existingMusic = await musicCollection.findOne({
+      title: title as string,
+      artist: artist as string,
+      bingo_id: id as string,
+    });
 
-    res.status(200).json(result);
+    if (existingMusic) {
+      return res.status(409).json({ error: "Music already exists in the database" });
+    }
+    
+    const result = await musicCollection.insertOne ({
+      artist: artist as string,
+      title: title as string,
+      bingo_id: bingo_id as string
+    })
+    
+    res.status(200).json({
+      acknowledged: result.acknowledged,
+      res: result
+    });
   } catch (err) {
     res.status(500).json({ error: "Server Error", info: JSON.stringify(err) });
     console.error("Error\n", err);
   }
 }
-

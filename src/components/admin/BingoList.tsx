@@ -6,10 +6,10 @@ import React from "react";
 import { UseStateProps } from "@/types/UseStateProps";
 import ConfirmationModal from "../design/models/ConfirmationModal";
 
-import Link from "next/link";
 import { useRouter } from "next/router";
 import BingoModal from "./models/BingoModal";
 import { deleteBingo } from "@/lib/firebase";
+import { ROUTES } from "@/lib/constant";
 
 export default function BingoList ({ bingoState } : { bingoState: UseStateProps<BingoDocType[]>  }) {
     
@@ -27,7 +27,7 @@ export default function BingoList ({ bingoState } : { bingoState: UseStateProps<
             maxW={'1400px'} margin={'0 auto'}
         >
             {bingos.map((val, idx)=>{
-                return <BingoUploadModal 
+                return <BingoCard 
                     key={idx}
                     curr={val}
                     bingoState={bingoState}
@@ -37,7 +37,7 @@ export default function BingoList ({ bingoState } : { bingoState: UseStateProps<
     </Flex>
 }
 
-export const BingoUploadModal = ({ curr, bingoState }: 
+export const BingoCard = ({ curr, bingoState }: 
     { curr: BingoDocType, bingoState: UseStateProps<BingoDocType[]> }
 )=> {
 
@@ -52,12 +52,8 @@ export const BingoUploadModal = ({ curr, bingoState }:
 
     return <Flex p={4} bg={'white'}  width={'100%'}
         rounded={'lg'} shadow={'dark-lg'} textOverflow={'ellipsis'}
-        alignItems={'center'} onClick={(e)=> {
-            e.stopPropagation()
-            // router.push(`${ROUTES.MUSICS}/${curr._id}`)
-        }}
+        alignItems={'center'} 
         _hover={{
-            cursor: 'pointer',
             shadow: 'md'
         }}
     >
@@ -84,7 +80,18 @@ export const BingoUploadModal = ({ curr, bingoState }:
                 })
             }}
             />
-            <Text fontSize={'md'} color={'blackAlpha.900'} textAlign={'center'}>
+            <Text fontSize={'md'} color={'blue.500'} textAlign={'center'}
+                onClick={(e)=> {
+                    e.stopPropagation()
+                    router.push(`${ROUTES.MUSICS}/${(curr as any).id}`)
+                }}
+                
+                _hover={{
+                    cursor: 'pointer',
+                    textDecoration: 'underline',
+                    color: 'blue.400'
+                }}
+            >
                 {curr.title}
             </Text>
             <Flex ml={'auto'} gap={2}>

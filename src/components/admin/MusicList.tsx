@@ -1,24 +1,24 @@
 import { musicsColRef } from "@/lib/firebase";
-import { MusicDocType } from "@/lib/firebase-docs-type";
+import { MusicDocType } from "@/lib/mongodb-schema";
 import { EditIcon } from "@chakra-ui/icons";
 import { Flex, Center, Heading, TableContainer, Table, TableCaption, Thead, Tr, Th, Tbody, Td, Tfoot, Button, Icon, useDisclosure, useMediaQuery } from "@chakra-ui/react";
 import { onSnapshot } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import UploadNEditModel from "./UploadNEditModel";
+import { UseStateProps } from "@/types/UseStateProps";
 
-export default function MusicList () {
+export default function MusicList ({
+    musicState 
+}: {
+    musicState: UseStateProps<MusicDocType[]>
+}) {
 
-    const [musics, setMusics] = useState<MusicDocType[]>([]);
+    const [musics, setMusics] = musicState as UseStateProps<MusicDocType[]>;
+
     const [editItem, setEditItem] = useState<MusicDocType | null>(null);
     const { isOpen, onClose, onOpen } = useDisclosure()
     const [isUnder600] = useMediaQuery("(max-width: 600px)");
     const [isUnder1000] = useMediaQuery("(max-width: 1000px)");
-    
-    useEffect(()=> {
-        onSnapshot(musicsColRef, (snapShot)=> {
-            setMusics(snapShot.docs.map((doc)=> doc.data() as MusicDocType))
-        });
-    }, [])
     
     return <Flex w={'100%'} p={isUnder600 ? '0.5rem' : '1rem'}>
         <Flex margin={'0 auto'} maxW={'1400px'} w={'100%'}
@@ -61,6 +61,6 @@ export default function MusicList () {
             </TableContainer>
         </Flex>
 
-        <UploadNEditModel handler={{ isOpen, onClose, onOpen }} editItem={editItem as MusicDocType} />
+        {/* <UploadNEditModel handler={{ isOpen, onClose, onOpen }} editItem={editItem as MusicDocType} /> */}
     </Flex>
 }

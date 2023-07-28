@@ -168,7 +168,7 @@ const UploadForm = ({
                     </Text>
                 </Stack>
             </FormHelperText>
-            <FormErrorMessage color={'red.200'}>{"Select CVS File"}</FormErrorMessage>
+            <FormErrorMessage color={'red.200'}>{"Select CSV File"}</FormErrorMessage>
         </FormControl>
 
         {/* preview */}
@@ -198,7 +198,7 @@ const UploadForm = ({
                 Cancel
             </Button>
         </center>
-
+        
         {musics.length > 0 && <MusicListPreview musics={musics}/>}
         {logs.length > 0 && <Flex flexDirection={'column'} width={'100%'} p={'0.5rem'} bg={'white'} gap={'0.3rem'} rounded={'md'}>
             <Text color={'red.500'} fontSize={'md'}>
