@@ -1,23 +1,52 @@
 import { updateMusic, uploadMusic } from "@/lib/firebase";
-import { MusicDocType } from "@/lib/firebase-docs-type";
+import { MusicDocType } from "@/lib/mongodb-schema";
 import { Drawer, DrawerBody, DrawerHeader, DrawerCloseButton, DrawerContent, DrawerOverlay, UseDisclosureProps 
- , FormControl, Input, FormLabel, Button, FormErrorMessage
+ , FormControl, Input, FormLabel, Button, FormErrorMessage, Flex, Icon, Slide, ScaleFade, Fade
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import UploadForm from "./UploadForm";
+import {FaFileCsv, FaWpforms } from "react-icons/fa";
+import MusicForm from "./MusicForm";
 
 export default function UploadNEditModel (
-    { handler, editItem }: { handler: UseDisclosureProps, editItem?: MusicDocType  }
+    {
+        handler, editItem
+    }: {
+        handler: UseDisclosureProps, editItem?: MusicDocType
+    }
 ) {
+    
+    const [uploadCSV, setUploadCSV] = useState<boolean>(false);
+
     return <Drawer onClose={handler.onClose || (()=>{})} isOpen={handler.isOpen || false} size={'full'}>
     <DrawerOverlay />
         <DrawerContent bg={'var(--bg-gradient)'}>
           <DrawerCloseButton />
           <DrawerHeader>{`${ editItem ? 'Edit' : 'Upload'} Music`}</DrawerHeader>
           <DrawerBody>
-            {!editItem ? 
-                <UploadForm onUpload={handler.onClose || (()=>{})} /> : 
+            {!editItem ? <>
+                <Flex my={'1rem'} width={'100%'} >
+                    <Button colorScheme={uploadCSV ? "green": "yellow"} size={'sm'} ml={'auto'} mr={'0.5rem'} onClick={()=>{
+                        setUploadCSV(!uploadCSV)
+                    }}>
+                        <Icon fontSize={'2xl'}>
+                            {uploadCSV ? 
+                                <FaWpforms />:
+                                <FaFileCsv />}
+                        </Icon>
+                    </Button>
+                </Flex>
+                {uploadCSV ? 
+                    <Fade in={uploadCSV} >
+                        <UploadForm onUpload={handler.onClose || (()=>{})} />
+                    </Fade>
+                    : 
+                    <Fade in={!uploadCSV}>
+                        <MusicForm onUpload={handler.onClose || (()=>{})} />
+                </Fade>}
+            </>
+                : 
                 <EditForm onUpload={handler.onClose || (()=>{})}  editItem={editItem}/>
             }
           </DrawerBody>
@@ -45,11 +74,11 @@ const EditForm = (
 
             setLoading(true);
             handleSubmit((d)=> {
-                    updateMusic(editItem.id, d.songName, d.artistName).then(()=> {
+                    /*
                         setLoading(false);
                         reset()
                         onUpload()
-                    });
+                    */
             }, (_)=> {
                 setLoading(false);
             })();
@@ -101,6 +130,7 @@ const EditForm = (
         </center>
     </form> 
 }
+
 
 
 

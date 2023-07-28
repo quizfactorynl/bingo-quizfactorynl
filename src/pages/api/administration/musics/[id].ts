@@ -43,6 +43,7 @@ export default async function handler(
 
     const { title, artist, bingo_id } = req.body;
     const musicCollection = db.collection<MusicDocType>(COLLECTIONS.MUSICS);
+    
     // Check if music already exists
     const existingMusic = await musicCollection.findOne({
       title: title as string,
@@ -69,3 +70,4 @@ export default async function handler(
     console.error("Error\n", err);
   }
 }
+

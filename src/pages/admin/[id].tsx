@@ -17,17 +17,19 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
     return {
         props: {
+            id,
             musics
         }
     }
 }
 
-export default function index({ musics }: { musics: MusicDocType[]}) {
-  console.log(musics);
+export default function index({ id, musics }: { id:string, musics: MusicDocType[]}) {
+  
   return <MainLayout pageTitle="Bingo - Admin" mainProps={{ className: `${montserratFont.className}`}}>
-     <Musics musics={musics}/>
+     <Musics musics={musics} id={id}/>
   </MainLayout>
 }
+
 
 
 
