@@ -37,13 +37,15 @@ export default function MusicForm ({
             setLoading(true);
             handleSubmit((d)=> {
                 
-                let isDuplicate = musicContext.state[0].filter (m=> {
+                let isDuplicateEntry = musicContext.state[0].filter (m=> {
                     return m.title == d.title && m.artist == d.artistName
                   }).length > 0
                 
-                setDuplicate (isDuplicate)
-                if(isDuplicate)
-                  return;
+                setDuplicate (isDuplicateEntry)
+                if(isDuplicateEntry) {
+                    setLoading(false);
+                    return;
+                }
 
 
                 const data: MusicDocType = {
@@ -70,8 +72,9 @@ export default function MusicForm ({
                         })
 
                         reset()
+                        onUpload()
                     }
-
+                    
                     setLoading(false)
                 }).catch(err=> {
                     toast({
@@ -103,7 +106,7 @@ export default function MusicForm ({
                 })}
             /> 
             <FormErrorMessage color={'red.200'}>
-                {duplicate && <>Duplicate entry</>}
+                {duplicate && "Duplicate entry \n"} <br/>
                 {errors.title && errors.title?.message as string}
             </FormErrorMessage>
         </FormControl>
@@ -126,7 +129,7 @@ export default function MusicForm ({
             />
 
             <FormErrorMessage color={'red.200'}>
-                {duplicate && <>Duplicate entry</>}
+                {duplicate && "Duplicate entry \n"} <br/>
                 {errors.artistName && errors.artistName?.message as string}
             </FormErrorMessage>
         </FormControl>    

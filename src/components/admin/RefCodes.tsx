@@ -12,6 +12,8 @@ export default function RefCodes () {
     const [codes, setCodes] = useState<RefCodeDocType[]>([])
     const [bingos, setBingos] = useState<BingoDocType[]>([])
 
+    const [changeFlag, setChangeFlag] = useState<boolean>(false)
+
     const modelHandler = useDisclosure()
 
     useEffect(()=> {
@@ -20,6 +22,7 @@ export default function RefCodes () {
                 return {bingo_name: bingos.find(bingo=> bingo.id == (doc.data() as RefCodeDocType).bingo_id)?.title  
                         ,...doc.data()} as RefCodeDocType
             }))
+            setChangeFlag(prev=> !prev)
          });
         
         const bingoUnSub = onSnapshot(bingosColRef, (snapShot)=> {
@@ -37,8 +40,8 @@ export default function RefCodes () {
             code.bingo_name = bingos.find(bingo=> bingo.id == code.bingo_id)?.title 
             return code
         }))
-    }, [bingos])
-
+    }, [bingos, changeFlag])
+    
     return <Flex flexDirection={'column'} background={'var(--bg-gradient)'} minH={'100%'}>
         <Navbar onAddBtnClick={()=> modelHandler.onOpen()}/>
         <CodeList codes={codes}/>

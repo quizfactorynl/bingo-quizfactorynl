@@ -1,4 +1,4 @@
-import { MusicDocType } from "@/lib/firebase-docs-type";
+import { MusicDocType } from "@/lib/mongodb-schema";
 import { Flex, Center, Heading, TableContainer, Table, Thead, Tr, Th, Tbody, Td, useMediaQuery } from "@chakra-ui/react";
 
 export default function MusicListPreview ({ musics }: { musics: Array<MusicDocType>}) {
@@ -14,7 +14,6 @@ export default function MusicListPreview ({ musics }: { musics: Array<MusicDocTy
             <Center>
                 <Heading>CSV File View</Heading>
             </Center>
-
             
             <TableContainer my={'1rem'} rounded={'lg'} bg={'white'} shadow={'dark-lg'} >
                 <Table variant='simple' style={{ tableLayout: isUnder1000 ? 'initial' : 'fixed'}}  overflow={'visible'}>

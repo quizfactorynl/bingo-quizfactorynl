@@ -1,61 +1,67 @@
-import { Flex, Grid, GridItem, Heading, useMediaQuery, Text } from "@chakra-ui/react"
+import { Flex, Grid, GridItem, Heading, useMediaQuery, Text, Button, Spinner } from "@chakra-ui/react"
 import Footer from "./Footer";
+import { useEffect, useState } from "react";
+import { MusicDocType } from "@/lib/mongodb-schema";
+import { RefCodeDocType } from "@/lib/firebase-docs-type";
+import axios from "axios";
+import { API_ROUTES } from "@/lib/constant";
+import { getDoc } from "firebase/firestore";
+import { bingosColRef } from "@/lib/firebase";
+import { WarningIcon } from "@chakra-ui/icons";
+import { UseStateProps } from "@/types/UseStateProps";
 
-const cardsData = [
-    {
-      title: "Baby, It's Cold Outside (feat. Darren Criss) foo",
-    },
-    {
-      title: "Another Song 2",
-    },
-    {
-      title: "Awesome Music 3",
-    },
-    {
-      title: "Hit Song 4",
-    },
-    {
-      title: "Top Track 5",
-    },
-    {
-      title: "Favorite Melody 6",
-    },
-    {
-      title: "Jazzy Tune 7",
-    },
-    {
-      title: "Chill Beats 8",
-    },
-    {
-      title: "Funky Rhythm 9",
-    },
-    {
-      title: "Rock Anthem 10",
-    },
-    {
-      title: "Bluesy Vibes 11",
-    },
-    {
-      title: "Soulful Melodies 12",
-    },
-    {
-      title: "EDM Banger 13",
-    },
-    {
-      title: "Acoustic Serenade 14",
-    },
-    {
-      title: "Rap Freestyle 15",
-    },
-    {
-      title: "Piano Sonata 16",
-    },
-];
-
-
-export default function MusicList () {
+export default function MusicList ({ refCode } : {
+  refCode: RefCodeDocType
+}) {
     const [isUnder600] = useMediaQuery("(max-width: 600px)");
 
+    const [musics, setMusics] = useState<MusicDocType[]>([])
+    const [loader, setLoader] = useState({
+      loading:false,
+      error: false
+    })
+
+    const [greenCards, setGreenCards] = useState<string[]>([])
+
+    useEffect(()=> {
+      setLoader({loading: true, error: false})
+      axios.get(API_ROUTES.RANDOMS_MUSIC + '/' + refCode.bingo_id)
+      .then((res)=> {
+        setLoader({loading: false, error: false})
+        setMusics(res.data)
+      }).catch((err)=> {
+        setLoader({loading: false, error: true})
+      })
+    }, [])
+
+    if(loader.loading) {
+      return <Flex width={'100%'} height={'100%'} justifyContent={'center'} alignItems={'center'}
+        flexDir={'column'} gap={4}
+      >
+        <Spinner size="xl" />
+        <Text>Loading...</Text>
+      </Flex>
+    }
+
+    if(loader.error) {
+      return <Flex width={'100%'} height={'100%'} justifyContent={'center'} alignItems={'center'}
+        flexDir={'column'} gap={4}
+      >
+        <Text color={'red.400'} fontSize={'2xl'}>
+          <WarningIcon mx={2} className="inherit-parent-icon"/>
+          Some thing Went Wrong
+        </Text>
+        <Button size={'sm'} colorScheme="yellow" color={'white'}
+          onClick={()=> {
+            window.location.href = '/'
+          }}
+        >
+          Go Home
+        </Button>
+      </Flex> 
+    }
+
+    
     return <Flex 
         justifyContent={'center'} alignItems={'center'} flexDirection={'column'}
         width={'100%'} height={'100%'}
@@ -69,8 +75,9 @@ export default function MusicList () {
 
         {/* cards */}
 
-        <Flex flex={1} bg={'white'} w={'100%'} justifyContent={'center'} alignItems={'center'}>
-            <Cards cards={cardsData}/>
+        <Flex flex={1} bg={'white'} w={'100%'} justifyContent={'center'} alignItems={'center'}
+        >
+            <Cards cards={musics} greenCardsState={[greenCards, setGreenCards]}/>
         </Flex>
     
         {/* footer */}
@@ -78,20 +85,30 @@ export default function MusicList () {
     </Flex>
 }
 
-const Cards = ({ cards }: { cards: {title: string}[] }) => {
+const Cards = (
+  { cards, greenCardsState }: { cards: MusicDocType[], greenCardsState: UseStateProps<string[]> }
+) => {
     const [isUnder600] = useMediaQuery("(max-width: 650px)");
     const [isUnder800] = useMediaQuery("(max-width: 800px)")
     const [isUnder500] = useMediaQuery("(max-width: 500px)")
 
     return (
+      <Flex maxW={'1400px'}>
       <Grid templateColumns="repeat(4, 1fr)" gap={4} width={'100%'} height={'100%'} p = {isUnder800 ? '1rem' : '2rem'} py={'5rem'}>
         {cards.map((card, index) => (
           <GridItem key={index} colSpan={1}>
             <Flex
-              bg="white"
+              bg={ greenCardsState [0].includes(card._id as string) ?  "green.300": "white"}
               p={isUnder800 ? isUnder500 ? 1 : 2 : 4}
               boxShadow="dark-lg"
               borderRadius="md"
+              onClick={()=>{
+                if(greenCardsState[0].includes(card._id as string)) {
+                  greenCardsState[1](greenCardsState[0].filter((greenCardId)=> greenCardId !== card._id))
+                } else {
+                  greenCardsState[1]([...greenCardsState[0], card._id as string])
+                }
+              }}
               flexDirection="column"
               justifyContent="center"
               alignItems="center"
@@ -116,8 +133,6 @@ const Cards = ({ cards }: { cards: {title: string}[] }) => {
           </GridItem>
         ))}
       </Grid>
+      </Flex>
     );
 };
-
-
-

@@ -1,22 +1,21 @@
 import { Box, Button, Flex, Heading, BoxProps, Text, useMediaQuery } from "@chakra-ui/react"
 import VerificationCodeInput from "./design/VerificationCodeInput"
 import Footer from "./Footer";
-import { useState } from "react";
+import { Ref, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { refCodeColRef } from "@/lib/firebase";
+import { RefCodeDocType } from "@/lib/firebase-docs-type";
 
 export default function Entry ({
     onValidate
 }: {
-    onValidate: ()=> void
+    onValidate: (refCode: RefCodeDocType)=> void
 }) {
     const [input, setInput] = useState<string>('')
     const [loading, setLoading] = useState({
         value: false,
         error: false
     });
-
-    console.log(input)
 
     return <>
         <Flex flexDir={'column'} w={'100%'} 
@@ -37,7 +36,7 @@ export default function Entry ({
                                 value: false,
                                 error: false
                             })
-                            // onValidate()
+                            onValidate(doc.data() as RefCodeDocType)
                             return
                         }
 

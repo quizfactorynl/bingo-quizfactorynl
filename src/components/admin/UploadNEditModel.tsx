@@ -1,13 +1,16 @@
 import { updateMusic, uploadMusic } from "@/lib/firebase";
 import { MusicDocType } from "@/lib/mongodb-schema";
 import { Drawer, DrawerBody, DrawerHeader, DrawerCloseButton, DrawerContent, DrawerOverlay, UseDisclosureProps 
- , FormControl, Input, FormLabel, Button, FormErrorMessage, Flex, Icon, Slide, ScaleFade, Fade
+ , FormControl, Input, FormLabel, Button, FormErrorMessage, Flex, Icon, Slide, ScaleFade, Fade, useToast
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { use, useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import UploadForm from "./UploadForm";
 import {FaFileCsv, FaWpforms } from "react-icons/fa";
 import MusicForm from "./MusicForm";
+import MusicContext from "@/hooks/MusicContext";
+import axios from "axios";
+import { API_ROUTES } from "@/lib/constant";
 
 export default function UploadNEditModel (
     {
@@ -64,32 +67,81 @@ const EditForm = (
         reset
     } = useForm();
     
-    const [loading, setLoading] = useState<boolean>(false);
+    const musicContext = useContext(MusicContext);
 
+    const [loading, setLoading] = useState<boolean>(false);
+    const [duplicate, setDuplicate] = useState<boolean>(false);
+
+    const toast = useToast()
+    
     return <form style={{ display:'flex', flexDirection: 'column', gap: '1rem'}}
         onSubmit={(e)=> {
             e.preventDefault()
-
             if(loading) return;
+            
 
-            setLoading(true);
             handleSubmit((d)=> {
-                    /*
-                        setLoading(false);
-                        reset()
-                        onUpload()
-                    */
+                let isDuplicate = musicContext.state[0].filter(i=>{
+                    return i.title == d.title && i.artist == d.artist
+                  }).length >0
+                
+                setDuplicate(isDuplicate);
+                if(isDuplicate){
+                    return;
+                }
+
+                setLoading(true);
+
+                
+                axios.patch(`${API_ROUTES.MUSICS}/${editItem._id}`, {
+                    title: d.title,
+                    artist: d.artist,
+                    bingo_id: editItem.bingo_id
+                } as MusicDocType).then(res=> {
+                    console.log(res.data)
+                    if(res.data.acknowledged) {
+                        // update entry
+                        musicContext.state[1](prev=> {
+                            return prev.map(i=> {
+                                if(i._id == editItem._id) {
+                                    return {
+                                        ...i,
+                                        title: d.title,
+                                        artist: d.artist
+                                    }
+                                }
+                                return i;
+                            })
+                        })
+                        toast({
+                            title: "Success",
+                            description: "Music Updated",
+                            status: "success",
+                        })
+                    }
+
+                    setLoading(false)
+                    onUpload();
+                }).catch(err=> {
+                    setLoading(false)
+                    toast({
+                        title: "Error",
+                        description: "An Error Occur" +err.message,
+                        status: "error",
+                    })
+                })
+
             }, (_)=> {
                 setLoading(false);
             })();
         }}
     >
-        <FormControl isInvalid={errors.songName != undefined} >
+        <FormControl isInvalid={errors.title != undefined || duplicate} >
             <FormLabel>Enter Song Name</FormLabel>
             <Input placeholder="song name"
                 shadow={'dark-lg'}
                 defaultValue={editItem?.title || ''}
-                {...register("songName", { 
+                {...register("title", { 
                     required: {
                         value: true,
                         message: "Song name required"
@@ -100,13 +152,18 @@ const EditForm = (
                     }
                 })}
             />
-            {errors.songName && <FormErrorMessage color={'red.200'}>{errors.songName?.message as string}</FormErrorMessage>}
+
+            <FormErrorMessage color={'red.200'}>
+                {duplicate ? 'Duplicate Entry' : ''}
+                <br/>
+                {errors.title && errors.title?.message as string}
+            </FormErrorMessage>
         </FormControl>
-        <FormControl isInvalid={errors.artistName != undefined}>
+        <FormControl isInvalid={errors.artist != undefined || duplicate}>
             <FormLabel>Enter Artist Name</FormLabel>
             <Input placeholder="artist name" shadow={'dark-lg'}
                 defaultValue={editItem?.artist || ''}
-                {...register("artistName", { 
+                {...register("artist", { 
                     required: {
                         value: true,
                         message: "artist name name required"
@@ -117,7 +174,11 @@ const EditForm = (
                     }
                 })}
             />
-            {errors.artistName && <FormErrorMessage color={'red.200'}>{errors.artistName?.message as string}</FormErrorMessage>}
+            <FormErrorMessage color={'red.200'}>
+                {duplicate ? 'Duplicate Entry' : ''}
+                <br/>
+                {errors.artist && errors.artist?.message as string}
+            </FormErrorMessage>
         </FormControl>    
 
         <center>
@@ -130,7 +191,6 @@ const EditForm = (
         </center>
     </form> 
 }
-
 
 
 
