@@ -7,6 +7,8 @@ import {
   Text,
   Button,
   Spinner,
+  Center,
+  Icon,
 } from "@chakra-ui/react";
 import Footer from "./Footer";
 import { useEffect, useState } from "react";
@@ -14,9 +16,7 @@ import { MusicDocType } from "@/lib/mongodb-schema";
 import { RefCodeDocType } from "@/lib/firebase-docs-type";
 import axios from "axios";
 import { API_ROUTES } from "@/lib/constant";
-import { getDoc } from "firebase/firestore";
-import { bingosColRef } from "@/lib/firebase";
-import { WarningIcon } from "@chakra-ui/icons";
+import { CheckIcon, WarningIcon } from "@chakra-ui/icons";
 import { UseStateProps } from "@/types/UseStateProps";
 
 export default function MusicList({ refCode }: { refCode: RefCodeDocType }) {
@@ -128,6 +128,8 @@ export default function MusicList({ refCode }: { refCode: RefCodeDocType }) {
         <Cards cards={musics} greenCardsState={[greenCards, setGreenCards]} />
       </Flex>
 
+      
+
       {/* footer */}
       
       <Footer marginBottom={"1rem"} padding={"1rem"} />
@@ -147,14 +149,16 @@ const Cards = ({
   const [isUnder500] = useMediaQuery("(max-width: 500px)");
 
   return (
-    <Flex maxW={"1400px"} height={'100%'} overflow={'hidden'}>
+    <Flex maxW={"1400px"} height={'100%'} overflow={'hidden'}
+      flexDir={'column'}
+    >
       <Grid
         templateColumns="repeat(4, 1fr)"
         gap={4}
         width={"100%"}
         height={"100%"}
         p={isUnder800 ? "1rem" : "2rem"}
-        py={"5rem"}
+        pt={"5rem"}
       >
         {cards.map((card, index) => (
           <GridItem key={index} colSpan={1}>
@@ -221,6 +225,16 @@ const Cards = ({
           </GridItem>
         ))}
       </Grid>
+      <Center py={'1rem'}>
+        <Text color={'blackAlpha.900'} textAlign={'center'} fontSize={'xl'}>
+          <Text color={'green.500'} display={'inline-block'} mx={1} fontSize={'xl'} textAlign={'center'}>
+            <Icon as={CheckIcon} className="inherit-parent-icon" color={'green.600'}/>
+          </Text>
+          <CheckIcon />
+          Bingo has been Generated
+        </Text>
+      </Center>
     </Flex>
   );
 };
+
