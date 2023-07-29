@@ -13,7 +13,6 @@ import {
   Th,
   Tbody,
   Td,
-  Tfoot,
   Button,
   Icon,
   useDisclosure,
@@ -73,7 +72,7 @@ export default function MusicList({
             Music List
           </Heading>
         </Center>
-
+        
         <Flex flexDir={'column'} my={'1rem'} gap={'0.5rem'}>
           <Text>Search Music</Text>
           <Input placeholder="Enter Music title or Artist name"

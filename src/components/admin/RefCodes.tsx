@@ -58,7 +58,6 @@ export default function RefCodes() {
     >
       <Navbar onAddBtnClick={() => modelHandler.onOpen()} />
       <CodeList codes={codes} />
-
       <RefCodeModal handler={modelHandler} bingos={bingos} codes={codes} />
     </Flex>
   );

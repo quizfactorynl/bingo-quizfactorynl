@@ -106,8 +106,18 @@ export default function MusicList({ refCode }: { refCode: RefCodeDocType }) {
         FOUTE BINGO
       </Heading>
 
+      <Flex
+        background={'url(/Images/upper-wave.svg)'}
+        width={'100%'}
+        backgroundRepeat="no-repeat"
+        backgroundPosition="center"
+        aspectRatio={980/300}
+        backgroundAttachment={'fixed'}
+      >
+        {' '}
+      </Flex>
       {/* cards */}
-
+    
       <Flex
         flex={1}
         bg={"white"}
@@ -119,6 +129,7 @@ export default function MusicList({ refCode }: { refCode: RefCodeDocType }) {
       </Flex>
 
       {/* footer */}
+      
       <Footer marginBottom={"1rem"} padding={"1rem"} />
     </Flex>
   );

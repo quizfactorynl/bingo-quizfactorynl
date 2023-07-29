@@ -27,6 +27,7 @@ export default function CodeList({ codes }: { codes: RefCodeDocType[] }) {
         margin={"0 auto"}
       >
         {codes.length === 0 && "No reference code found"}
+        {codes.length > 0 && 
         <Flex
           width={"100%"}
           bg={"white"}
@@ -38,11 +39,13 @@ export default function CodeList({ codes }: { codes: RefCodeDocType[] }) {
           {codes.map((code, idx) => {
             return <CodeCard key={idx} code={code} />;
           })}
-        </Flex>
+        </Flex>}
       </Flex>
     </Flex>
   );
 }
+
+
 const CodeCard = ({ code }: { code: RefCodeDocType }) => {
   const deleteModelHandler = useDisclosure();
   const toast = useToast();
