@@ -33,23 +33,29 @@ export default async function handler(
         const { title } = req.body;
 
         if (!title) {
-          return res.status(400).json({ error: "Title is required for update." });
+          return res
+            .status(400)
+            .json({ error: "Title is required for update." });
         }
-        
+
         const updatedBingo = await collection.findOneAndUpdate(
           { _id: new ObjectId(id as string) },
-          { $set: { title } }
-         );
-        
+          { $set: { title } },
+        );
+
         if (!updatedBingo.value) {
           return res.status(404).json({ error: "Bingo not found." });
         }
 
-        res.status(200).json({ acknowledged: updatedBingo.ok ,res: updatedBingo.value } );
-      break;
-        
+        res
+          .status(200)
+          .json({ acknowledged: updatedBingo.ok, res: updatedBingo.value });
+        break;
+
       case "DELETE":
-        const deletedBingo = await collection.findOneAndDelete({ _id: new ObjectId(id as string) });
+        const deletedBingo = await collection.findOneAndDelete({
+          _id: new ObjectId(id as string),
+        });
 
         if (!deletedBingo.value) {
           return res.status(404).json({ error: "Bingo not found." });
@@ -57,7 +63,7 @@ export default async function handler(
 
         res.status(200).json({
           acknowledged: deletedBingo.ok,
-          res: deletedBingo.value
+          res: deletedBingo.value,
         });
         break;
 

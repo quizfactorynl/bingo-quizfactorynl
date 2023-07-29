@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC } from "react";
 import {
   Button,
   Modal,
@@ -8,7 +8,7 @@ import {
   ModalBody,
   ModalFooter,
   ModalCloseButton,
-} from '@chakra-ui/react';
+} from "@chakra-ui/react";
 
 interface ConfirmationModalProps {
   isOpen: boolean;
@@ -24,18 +24,22 @@ const ConfirmationModal: FC<ConfirmationModalProps> = ({
   onYes,
 }) => {
   return (
-    <Modal isOpen={isOpen} onClose={onClose} isCentered >
-      <ModalOverlay bg='transparent'
-      backdropFilter='blur(2px)'/>
+    <Modal isOpen={isOpen} onClose={onClose} isCentered>
+      <ModalOverlay bg="transparent" backdropFilter="blur(2px)" />
       <ModalContent>
-        <ModalHeader color={'blackAlpha.800'}>Confirmation</ModalHeader>
+        <ModalHeader color={"blackAlpha.800"}>Confirmation</ModalHeader>
         <ModalCloseButton />
-        <ModalBody color={'black'}>{message}</ModalBody>
+        <ModalBody color={"black"}>{message}</ModalBody>
         <ModalFooter>
-          <Button variant={'outline'} colorScheme="green" mr={3} onClick={onYes}>
+          <Button
+            variant={"outline"}
+            colorScheme="green"
+            mr={3}
+            onClick={onYes}
+          >
             Yes
           </Button>
-          <Button variant={'outline'} onClick={onClose} colorScheme='blue'>
+          <Button variant={"outline"} onClick={onClose} colorScheme="blue">
             No
           </Button>
         </ModalFooter>

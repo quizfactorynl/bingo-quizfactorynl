@@ -32,7 +32,6 @@ main {
   height: 100%;
 }
 
-
 .inherit-parent-icon {
   color: inherit !important;
 }
@@ -41,10 +40,12 @@ main {
   color: inherit !important;
 }
 
-.inherit-parent-icon > g  {
+.inherit-parent-icon > g {
   color: inherit !important;
 }
 
 .inherit-parent-icon polygon {
   color: inherit !important;
 }
+
+

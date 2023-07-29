@@ -1,63 +1,92 @@
 import { ROUTES } from "@/lib/constant";
 import { AddIcon, LinkIcon } from "@chakra-ui/icons";
-import { Flex, Button, Icon, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
+import {
+  Flex,
+  Button,
+  Icon,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+} from "@chakra-ui/react";
 
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
-export default function Navbar ({
-    onAddBtnClick
+export default function Navbar({
+  onAddBtnClick,
 }: {
-    onAddBtnClick?: ()=> void
+  onAddBtnClick?: () => void;
 }) {
-    
-    const router = useRouter()
+  const router = useRouter();
 
-    return <Flex w={'100%'} shadow={'dark-lg'} p = {'0.5rem'} borderBottom={'2px solid white'} boxShadow={'sm'} bg={'var(--light-blue)'}>
-        <Flex maxW={'1400px'} w={'100%'} margin={'0 auto'} px={'0.5rem'}
-            alignItems={'center'} 
+  return (
+    <Flex
+      w={"100%"}
+      shadow={"dark-lg"}
+      p={"0.5rem"}
+      borderBottom={"2px solid white"}
+      boxShadow={"sm"}
+      bg={"var(--light-blue)"}
+    >
+      <Flex
+        maxW={"1400px"}
+        w={"100%"}
+        margin={"0 auto"}
+        px={"0.5rem"}
+        alignItems={"center"}
+      >
+        <Link href={ROUTES.MUSICS}>
+          <Image src="/Images/logo.png" alt="logo" width={70} height={70} />
+        </Link>
+        <Button
+          ml={"auto"}
+          color={"var(--light-blue)"}
+          size={"md"}
+          onClick={onAddBtnClick}
+          shadow={"dark-lg"}
         >
-            <Link href={ROUTES.MUSICS}>
-                <Image 
-                    src="/Images/logo.png"
-                    alt="logo"
-                    width={70}
-                    height={70}
-                />
-            </Link>
-            <Button ml={'auto'} color={'var(--light-blue)'} size={'md'} onClick={onAddBtnClick}
-                shadow={'dark-lg'}
-            >
-                <Icon as={AddIcon} className="inherit-parent-icon" fontWeight={'extrabold'} fontSize={'xl'}/>
-            </Button>
+          <Icon
+            as={AddIcon}
+            className="inherit-parent-icon"
+            fontWeight={"extrabold"}
+            fontSize={"xl"}
+          />
+        </Button>
 
-            <Menu>
-                <MenuButton as={Button} ml={2}
-                    color={'blackAlpha.900'} colorScheme="yellow"
-                >
-                    <Icon as = {LinkIcon} 
-                        className="inherit-parent-icon" color={'blackAlpha.900'}
-                    />
-                </MenuButton>
-                <MenuList >
-                     <MenuItem color={'blackAlpha.900'}
-                        onClick={()=> router.push('/')}
-                     >
-                        Home
-                    </MenuItem>
-                    <MenuItem color={'blackAlpha.900'}
-                        onClick={()=> router.push(ROUTES.MUSICS)}
-                    >
-                        Admin 
-                    </MenuItem>
-                    <MenuItem color={'blackAlpha.900'}
-                        onClick={()=> router.push(ROUTES.REF_CODES)}
-                    >
-                        Reference Code
-                    </MenuItem>
-                </MenuList>
-            </Menu>
-        </Flex>
+        <Menu>
+          <MenuButton
+            as={Button}
+            ml={2}
+            color={"blackAlpha.900"}
+            colorScheme="yellow"
+          >
+            <Icon
+              as={LinkIcon}
+              className="inherit-parent-icon"
+              color={"blackAlpha.900"}
+            />
+          </MenuButton>
+          <MenuList>
+            <MenuItem color={"blackAlpha.900"} onClick={() => router.push("/")}>
+              Home
+            </MenuItem>
+            <MenuItem
+              color={"blackAlpha.900"}
+              onClick={() => router.push(ROUTES.MUSICS)}
+            >
+              Admin
+            </MenuItem>
+            <MenuItem
+              color={"blackAlpha.900"}
+              onClick={() => router.push(ROUTES.REF_CODES)}
+            >
+              Reference Code
+            </MenuItem>
+          </MenuList>
+        </Menu>
+      </Flex>
     </Flex>
+  );
 }
