@@ -38,8 +38,9 @@ export default function Navbar({
         alignItems={"center"}
       >
         <Link href={ROUTES.MUSICS}>
-          <Image src="/Images/logo.png" alt="logo" width={70} height={70} />
+          <Image src="/Images/Logo.png" alt="logo" width={70} height={70} />
         </Link>
+
         <Button
           ml={"auto"}
           color={"var(--light-blue)"}

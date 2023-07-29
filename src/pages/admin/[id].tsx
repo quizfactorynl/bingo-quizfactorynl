@@ -10,7 +10,8 @@ import Musics from "@/components/admin/Musics";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { id } = context.query;
-
+  
+  console.log("URL: ", BASE_URL + API_ROUTES.MUSICS + "/" + id);
   const res = await fetch(BASE_URL + API_ROUTES.MUSICS + "/" + id);
   const musics = await res.json();
 
