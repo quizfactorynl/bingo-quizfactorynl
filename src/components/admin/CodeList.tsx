@@ -75,25 +75,25 @@ const CodeCard = ({ code }: { code: RefCodeDocType }) => {
         }}
       />
       <Box
-        border={"1px solid blackAlpha.400"}
-        color={"blackAlpha.900"}
+        border="1px solid blackAlpha.400"
+        color="blackAlpha.900"
         flex={1}
         width={{
-          base: "100%",
-          sm: "calc(50% - 8px)",
-          md: "calc(33.333% - 12px)",
+          base: '100%',
+          sm: 'calc(50% - 8px)',
+          md: 'calc(50% - 16px)', // Modified to two cards per row on medium-sized screens and above
         }}
         p={4}
-        boxShadow={"md"}
-        borderRadius={"md"}
+        boxShadow="md"
+        borderRadius="md"
         my={2}
         mx={1}
         display="flex"
         alignItems="center"
         _hover={{
-          cursor: "pointer",
-          shadow: "lg",
-          border: "1px solid blackAlpha.600",
+          cursor: 'pointer',
+          shadow: 'lg',
+          border: '1px solid blackAlpha.600',
         }}
       >
         <IconButton
