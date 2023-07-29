@@ -11,7 +11,7 @@ import {
   Icon,
 } from "@chakra-ui/react";
 import Footer from "./Footer";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { MusicDocType } from "@/lib/mongodb-schema";
 import { RefCodeDocType } from "@/lib/firebase-docs-type";
 import axios from "axios";
@@ -148,6 +148,12 @@ const Cards = ({
   const [isUnder800] = useMediaQuery("(max-width: 800px)");
   const [isUnder500] = useMediaQuery("(max-width: 500px)");
 
+  const [showMessage, setShowMessage] = useState(false);
+
+  useEffect(()=> {
+    setShowMessage(greenCardsState[0].length === 5)
+  }, [greenCardsState[0]])
+
   return (
     <Flex maxW={"1400px"} height={'100%'} overflow={'hidden'}
       flexDir={'column'}
@@ -225,7 +231,7 @@ const Cards = ({
           </GridItem>
         ))}
       </Grid>
-      <Center py={'1rem'}>
+      {showMessage && <Center py={'1rem'}>
         <Text color={'blackAlpha.900'} textAlign={'center'} fontSize={'xl'}>
           <Text color={'green.500'} display={'inline-block'} mx={1} fontSize={'xl'} textAlign={'center'}>
             <Icon as={CheckIcon} className="inherit-parent-icon" color={'green.600'}/>
@@ -233,7 +239,7 @@ const Cards = ({
           <CheckIcon />
           Bingo has been Generated
         </Text>
-      </Center>
+      </Center>}
     </Flex>
   );
 };
