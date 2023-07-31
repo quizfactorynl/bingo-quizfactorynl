@@ -13,6 +13,9 @@ import {
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { firebase, signOutUser } from "@/lib/firebase";
+import { useEffect } from "react";
 
 export default function Navbar({
   onAddBtnClick,
@@ -20,7 +23,13 @@ export default function Navbar({
   onAddBtnClick?: () => void;
 }) {
   const router = useRouter();
+  const [user, loading]= useAuthState(firebase.firebaseAuth)
 
+  useEffect(()=> {
+    if(!user && !loading)
+      router.push('/')
+  }, [user])
+  
   return (
     <Flex
       w={"100%"}
@@ -87,7 +96,14 @@ export default function Navbar({
             </MenuItem>
           </MenuList>
         </Menu>
+
+        {user && <Button ml={'0.5rem'} colorScheme="red" onClick={()=>{
+          signOutUser()
+        }}>
+          Sign-out
+        </Button>}
       </Flex>
     </Flex>
   );
 }
+

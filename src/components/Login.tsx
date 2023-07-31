@@ -1,5 +1,5 @@
 import { API_ROUTES } from "@/lib/constant";
-import { adminsColRef, firebase } from "@/lib/firebase";
+import { adminsColRef, firebase, signOutUser } from "@/lib/firebase";
 import { Button, Center, Flex, Input, Link, Text } from "@chakra-ui/react";
 import axios from "axios";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
@@ -26,10 +26,11 @@ export default function Login () {
     const [loginState, setLoginState] = useState({
         loading: false,
         message: ''
-     })
+    })
 
     useEffect(()=> {
-        if(user == null) return;
+        
+        if(user == null) return setIsValidUser(false);
 
         const authenticateUser = async () => {
             const res = await getDoc(doc(adminsColRef, user.uid))
@@ -73,6 +74,7 @@ export default function Login () {
             <Input placeholder="Enter password" minW={'250px'}
                 disabled={user == null} value={password}
                 onChange={(e)=> setPassword(e.target.value)}
+                type="password"
             />
             {isValidUser && <Link color={'blue.50'}>
                 Forgot password?
@@ -89,7 +91,7 @@ export default function Login () {
                     setLoginState({...loginState, loading: true });
 
                     loginUser(user.uid as string, password).then(()=> {
-                        router.push('/admin')
+                         window.location.href = '/admin'
                         setLoginState({...loginState, loading: false });
                     }).catch(err=> {
                         setLoginState ({ loading: false, message: err.response.data })
@@ -97,6 +99,11 @@ export default function Login () {
                 }}
             >
                 Login
+            </Button>}
+            {user && <Button colorScheme="red" onClick={()=>{
+                signOutUser()
+            }}>
+                SignOut
             </Button>}
             {(!isValidUser && user) && <Text color={'red.300'}>
                 Gebruiker niet geauthenticeerd, gebruik een geldig e-mailadres    

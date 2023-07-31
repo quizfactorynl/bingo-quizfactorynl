@@ -20,6 +20,8 @@ import { CheckIcon, WarningIcon } from "@chakra-ui/icons";
 import { UseStateProps } from "@/types/UseStateProps";
 import { doc, getDoc } from "firebase/firestore";
 import { bingosColRef } from "@/lib/firebase";
+import Loader from "./design/Loader";
+import ErrorPanel from "./design/ErrorPanel";
 
 export default function MusicList({ refCode }: { refCode: RefCodeDocType }) {
   const [isUnder600] = useMediaQuery("(max-width: 600px)");
@@ -50,50 +52,12 @@ export default function MusicList({ refCode }: { refCode: RefCodeDocType }) {
       });
   }, []);
 
-  if (loader.loading) {
-    return (
-      <Flex
-        width={"100%"}
-        height={"100%"}
-        justifyContent={"center"}
-        alignItems={"center"}
-        flexDir={"column"}
-        gap={4}
-      >
-        <Spinner size="xl" />
-        <Text>De juiste noten bij elkaar zoeken...</Text>
-      </Flex>
-    );
-  }
-
+  if (loader.loading) return <Loader />;
+  
   if (loader.error) {
-    return (
-      <Flex
-        width={"100%"}
-        height={"100%"}
-        justifyContent={"center"}
-        alignItems={"center"}
-        flexDir={"column"}
-        gap={4}
-      >
-        <Text color={"red.400"} fontSize={"2xl"}>
-          <WarningIcon mx={2} className="inherit-parent-icon" />
-          Some thing Went Wrong
-        </Text>
-        <Button
-          size={"sm"}
-          colorScheme="yellow"
-          color={"white"}
-          onClick={() => {
-            window.location.href = "/";
-          }}
-        >
-          Go Home
-        </Button>
-      </Flex>
-    );
+    return <ErrorPanel errorType="client" />
   }
-
+  
   return ( <Flex
     width={'100%'} height={'100%'} 
   >

@@ -1,7 +1,7 @@
 // Firebase entry point
 
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { getAuth, signOut } from "firebase/auth";
 import {
   arrayUnion,
   collection,
@@ -165,3 +165,10 @@ export const deleteBingo = (id: string) => {
   const docRef = doc(bingosColRef, id);
   return deleteDoc(docRef);
 };
+
+export const signOutUser = ()=> {
+  signOut(firebase.firebaseAuth).then(()=>{
+    fetch("/api/administration/logout")
+  });
+}
+

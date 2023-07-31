@@ -4,7 +4,11 @@ import clientPromise, { COLLECTIONS } from "@/lib/mongodb";
 import { BingoDocType, MusicDocType } from "@/lib/mongodb-schema";
 import { ObjectId } from "mongodb";
 
-export default async function handler(
+import authMiddleware from "@/lib/authMiddleware";
+
+export default authMiddleware(handler);
+
+async function handler(
   req: NextApiRequest,
   res: NextApiResponse<any>,
 ) {
