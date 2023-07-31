@@ -11,13 +11,15 @@ import {
   Icon,
 } from "@chakra-ui/react";
 import Footer from "./Footer";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { MusicDocType } from "@/lib/mongodb-schema";
-import { RefCodeDocType } from "@/lib/firebase-docs-type";
+import { BingoDocType, RefCodeDocType } from "@/lib/firebase-docs-type";
 import axios from "axios";
 import { API_ROUTES } from "@/lib/constant";
 import { CheckIcon, WarningIcon } from "@chakra-ui/icons";
 import { UseStateProps } from "@/types/UseStateProps";
+import { doc, getDoc } from "firebase/firestore";
+import { bingosColRef } from "@/lib/firebase";
 
 export default function MusicList({ refCode }: { refCode: RefCodeDocType }) {
   const [isUnder600] = useMediaQuery("(max-width: 600px)");
@@ -29,6 +31,7 @@ export default function MusicList({ refCode }: { refCode: RefCodeDocType }) {
   });
 
   const [greenCards, setGreenCards] = useState<string[]>([]);
+  const [bingo, setBingo] = useState<BingoDocType | null>(null)
 
   useEffect(() => {
     setLoader({ loading: true, error: false });
@@ -37,6 +40,10 @@ export default function MusicList({ refCode }: { refCode: RefCodeDocType }) {
       .then((res) => {
         setLoader({ loading: false, error: false });
         setMusics(res.data);
+
+        getDoc(doc(bingosColRef, refCode.bingo_id)).then(d=>{
+          setBingo(d.data() as BingoDocType)
+        })
       })
       .catch((err) => {
         setLoader({ loading: false, error: true });
@@ -54,7 +61,7 @@ export default function MusicList({ refCode }: { refCode: RefCodeDocType }) {
         gap={4}
       >
         <Spinner size="xl" />
-        <Text>Loading...</Text>
+        <Text>De juiste noten bij elkaar zoeken...</Text>
       </Flex>
     );
   }
@@ -87,7 +94,9 @@ export default function MusicList({ refCode }: { refCode: RefCodeDocType }) {
     );
   }
 
-  return (
+  return ( <Flex
+    width={'100%'} height={'100%'} 
+  >
     <Flex
       justifyContent={"center"}
       alignItems={"center"}
@@ -103,19 +112,9 @@ export default function MusicList({ refCode }: { refCode: RefCodeDocType }) {
         mt={"1rem"}
         textShadow={"dark-lg"}
       >
-        FOUTE BINGO
+        {bingo?.title} BINGO
       </Heading>
 
-      <Flex
-        background={'url(/Images/upper-wave.svg)'}
-        width={'100%'}
-        backgroundRepeat="no-repeat"
-        backgroundPosition="center"
-        aspectRatio={980/300}
-        backgroundAttachment={'fixed'}
-      >
-        {' '}
-      </Flex>
       {/* cards */}
     
       <Flex
@@ -134,12 +133,14 @@ export default function MusicList({ refCode }: { refCode: RefCodeDocType }) {
       
       <Footer marginBottom={"1rem"} padding={"1rem"} />
     </Flex>
+    </Flex>
   );
 }
 
 const Cards = ({
   cards,
   greenCardsState,
+
 }: {
   cards: MusicDocType[];
   greenCardsState: UseStateProps<string[]>;
@@ -156,7 +157,7 @@ const Cards = ({
 
   return (
     <Flex maxW={"1400px"} height={'100%'} overflow={'hidden'}
-      flexDir={'column'}
+      flexDir={'column'} 
     >
       <Grid
         templateColumns="repeat(4, 1fr)"
@@ -165,6 +166,7 @@ const Cards = ({
         height={"100%"}
         p={isUnder800 ? "1rem" : "2rem"}
         pt={"5rem"}
+        pb={showMessage ? "2rem" :"5rem"}
       >
         {cards.map((card, index) => (
           <GridItem key={index} colSpan={1}>

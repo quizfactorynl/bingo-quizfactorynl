@@ -56,6 +56,8 @@ export const firebase: InitializeFirebaseAppType = initializeFirebaseApp();
 
 // collections
 export const musicsColRef = collection(firebase.firebaseStore, "musics");
+export const adminsColRef = collection(firebase.firebaseStore, "admins")
+
 // export function uploadBingo (title: string)
 
 export function uploadMusic(title: string, artist: string, bingoName: string) {

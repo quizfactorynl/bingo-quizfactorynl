@@ -15,3 +15,9 @@ export interface RefCodeDocType {
   bingo_id: string;
   bingo_name?: string;
 }
+
+export interface AdminDocType {
+  email: string;
+  password: string;
+}
+

@@ -11,7 +11,9 @@ export default function Page() {
   const [refCode, setRefCode] = useState<RefCodeDocType | null>(null);
 
   return (
-    <MainLayout mainProps={{ className: `${montserratFont.className}` }}>
+    <MainLayout  mainProps={{
+       className: `${montserratFont.className}`
+    }}>
       {showList ? (
         <>{refCode && <MusicList refCode={refCode} />} </>
       ) : (
