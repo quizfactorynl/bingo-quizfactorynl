@@ -61,23 +61,51 @@ export default function MusicList({ refCode }: { refCode: RefCodeDocType }) {
   return ( <Flex
     width={'100%'} height={'100%'} 
   >
+    
     <Flex
       justifyContent={"center"}
       alignItems={"center"}
       flexDirection={"column"}
       width={"100%"}
       height={"100%"}
+      bg={'white'}
+      py={'9rem'}
     >
+     
       {/* header */}
-      <Heading
-        fontWeight={700}
-        fontSize={isUnder600 ? "2.5rem" : "4.5rem"}
-        textAlign={"center"}
-        mt={"1rem"}
-        textShadow={"dark-lg"}
+      
+      <Flex
+        width={'100%'}
+        position={'fixed'}
+        top={0}
+        left={0}
+        right={0}
+        height={'8rem'}
+        justifyContent="center" // This centers the child elements horizontally
       >
-        {bingo?.title} BINGO
-      </Heading>
+        <img
+          src="./Images/up.png"
+          alt="up-wave"
+          style={{
+            width: '100%',
+            zIndex: -1, // Make sure the image is below the text
+            position: 'absolute', // Set the image position to absolute
+            height: '8rem'
+          }}
+        />
+        <Heading
+          fontWeight={700}
+          fontSize={isUnder600 ? "2.5rem" : "4.5rem"}
+          textAlign={"center"}
+          mt={"1rem"}
+          textShadow={"dark-lg"}
+          position="relative" // Set the text position to relative to make it sit above the image
+          zIndex={1} // Set the text's z-index to be higher than the image's z-index
+        >
+          {bingo?.title} BINGO
+        </Heading>
+      </Flex>
+
 
       {/* cards */}
     
@@ -95,7 +123,31 @@ export default function MusicList({ refCode }: { refCode: RefCodeDocType }) {
 
       {/* footer */}
       
-      <Footer marginBottom={"1rem"} padding={"1rem"} />
+      <Flex
+        width={'100%'}
+        position={'fixed'}
+        bottom={0}
+        left={0}
+        right={0}
+        height={'8rem'}
+        justifyContent="center" // This centers the child elements horizontally
+        alignItems={'center'}
+      >
+        <img
+          src="./Images/down.png"
+          alt="up-wave"
+          style={{
+            width: '100%',
+            zIndex: -1, // Make sure the image is below the text
+            position: 'absolute', // Set the image position to absolute
+            height: '8rem'
+          }}
+        />
+        <Footer  
+          zIndex={2} position={'relative'} p = {'0.5rem'}
+        />
+      </Flex>
+
     </Flex>
     </Flex>
   );
@@ -209,4 +261,6 @@ const Cards = ({
     </Flex>
   );
 };
+
+
 

@@ -27,44 +27,10 @@ export default function Login () {
         loading: false,
         message: ''
     })
-
-
-
-
-
-
-
-    const [email, setEmail] = useState<string>("")
-
-
-
-
-
-
-
-
- useEffect(()=> setIsValidUser(email == (process.env.NEXT_PUBLIC_ADMIN_EMAIL as string)), [email])
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     
-
-
-    const router = useRouter()
+    const [email, setEmail] = useState<string>("")
+    useEffect(()=> setIsValidUser(email == (process.env.NEXT_PUBLIC_ADMIN_EMAIL as string)), [email])
+    
 
     return <Flex width={'100%'} height={'100%'} justifyContent={'center'} alignItems={'center'}>
         <Flex  justifyContent={'center'} alignItems={'center'}
