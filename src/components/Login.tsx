@@ -71,7 +71,7 @@ export default function Login () {
             flexDirection={'column'} gap={4}
         >
             <Link href="/">
-                <Image src={'/Images/logo.png'} width={160} height={160} alt="logo-image" 
+                <Image src={'/Images/Logo.png'} width={160} height={160} alt="logo-image" 
                     style={{ marginBottom: '0.8rem' }}
                 />
             </Link>
