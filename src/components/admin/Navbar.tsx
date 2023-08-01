@@ -23,12 +23,6 @@ export default function Navbar({
   onAddBtnClick?: () => void;
 }) {
   const router = useRouter();
-  const [user, loading]= useAuthState(firebase.firebaseAuth)
-
-  useEffect(()=> {
-    if(!user && !loading)
-      router.push('/')
-  }, [user])
   
   return (
     <Flex
@@ -97,11 +91,11 @@ export default function Navbar({
           </MenuList>
         </Menu>
 
-        {user && <Button ml={'0.5rem'} colorScheme="red" onClick={()=>{
+        <Button ml={'0.5rem'} colorScheme="red" onClick={()=>{
           signOutUser().then(()=> window.location.reload())
         }}>
           Sign-out
-        </Button>}
+        </Button>
       </Flex>
     </Flex>
   );
