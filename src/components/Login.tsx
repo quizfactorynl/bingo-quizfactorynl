@@ -75,11 +75,10 @@ export default function Login () {
                     style={{ marginBottom: '0.8rem' }}
                 />
             </Link>
-            <Input placeholder="Enter Email" minW={'250px'} disabled={true} value={email}
+            <Input placeholder="Enter Email" minW={'250px'}  value={email}
                 onChange={(e)=> setEmail(e.target.value)}
             />
-
-           
+            
             <Input placeholder="Enter password" minW={'250px'}
                 value={password}
                 onChange={(e)=> setPassword(e.target.value)}
