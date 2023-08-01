@@ -82,6 +82,7 @@ export default function MusicList({ refCode }: { refCode: RefCodeDocType }) {
         right={0}
         height={'8rem'}
         justifyContent="center" // This centers the child elements horizontally
+        alignItems={'center'}
       >
         <img
           src="./Images/up.png"
@@ -95,7 +96,7 @@ export default function MusicList({ refCode }: { refCode: RefCodeDocType }) {
         />
         <Heading
           fontWeight={700}
-          fontSize={isUnder600 ? "2.5rem" : "4.5rem"}
+          fontSize={isUnder600 ? "1.5rem" : "3rem"}
           textAlign={"center"}
           mt={"1rem"}
           textShadow={"dark-lg"}
@@ -144,10 +145,10 @@ export default function MusicList({ refCode }: { refCode: RefCodeDocType }) {
           }}
         />
         <Footer  
-          zIndex={2} position={'relative'} p = {'0.5rem'}
+          zIndex={2} position={'relative'} p = {'0.8rem'}
         />
       </Flex>
-
+        
     </Flex>
     </Flex>
   );
@@ -168,7 +169,7 @@ const Cards = ({
   const [showMessage, setShowMessage] = useState(false);
 
   useEffect(()=> {
-    setShowMessage(greenCardsState[0].length === 5)
+    setShowMessage(greenCardsState[0].length >= 5)
   }, [greenCardsState[0]])
 
   return (
@@ -189,7 +190,7 @@ const Cards = ({
             <Flex
               bg={
                 greenCardsState[0].includes(card._id as string)
-                  ? "green.300"
+                  ? "#01B902"
                   : "white"
               }
               p={isUnder800 ? (isUnder500 ? 1 : 2) : 4}
@@ -216,7 +217,7 @@ const Cards = ({
               overflow="hidden" // Hide any overflowing content
               textOverflow="ellipsis" // Display an ellipsis (...) when text overflows
               _hover={{
-                opacity: "60%",
+                opacity: "80%",
                 cursor: "pointer",
               }}
               justifyItems={"center"}
@@ -241,6 +242,7 @@ const Cards = ({
                   size={isUnder600 ? "sm" : "md"}
                   textAlign="center"
                   color={"blackAlpha.900"}
+                  fontWeight={'light'}
                 >
                   {card.title}
                 </Heading>
@@ -249,7 +251,7 @@ const Cards = ({
           </GridItem>
         ))}
       </Grid>
-      {showMessage && <Center py={'1rem'}>
+      {showMessage && <Center py={'0.2rem'} mb={'1.3rem'}>
         <Text color={'blackAlpha.900'} textAlign={'center'} fontSize={'xl'}>
           <Text color={'green.500'} display={'inline-block'} mx={1} fontSize={'xl'} textAlign={'center'}>
             <Icon as={CheckIcon} className="inherit-parent-icon" color={'green.600'}/>
