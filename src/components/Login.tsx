@@ -71,7 +71,7 @@ export default function Login () {
                     opacity: 0.4,
                 }}
                 onClick={()=> {
-                    if(email != process.env.NEXT_PUBLIC_ADMIN_EMAIL) return;
+                    if(email != (process.env.NEXT_PUBLIC_ADMIN_EMAIL as string)) return;
                     setLoginState({...loginState, loading: true });
 
                     loginUser(email, password).then(()=> {
