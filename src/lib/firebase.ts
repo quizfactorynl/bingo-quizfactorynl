@@ -167,6 +167,6 @@ export const deleteBingo = (id: string) => {
 };
 
 export const signOutUser = ()=> {
-  fetch("/api/administration/logout")
+  return fetch("/api/administration/logout")
 }
 
