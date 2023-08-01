@@ -98,7 +98,7 @@ export default function Navbar({
         </Menu>
 
         {user && <Button ml={'0.5rem'} colorScheme="red" onClick={()=>{
-          signOutUser()
+          signOutUser().then(()=> window.location.reload())
         }}>
           Sign-out
         </Button>}
