@@ -167,8 +167,6 @@ export const deleteBingo = (id: string) => {
 };
 
 export const signOutUser = ()=> {
-  signOut(firebase.firebaseAuth).then(()=>{
-    fetch("/api/administration/logout")
-  });
+  fetch("/api/administration/logout")
 }
 
