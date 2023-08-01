@@ -63,7 +63,6 @@ export default function Login () {
             {isValidUser && <Link color={'blue.50'}>
                 Forgot password?
             </Link>}
-            {isValidUser && 
             <Button
                 colorScheme="yellow" color={'white'}
                 isLoading={loginState.loading} 
@@ -71,7 +70,7 @@ export default function Login () {
                     opacity: 0.4,
                 }}
                 onClick={()=> {
-                    if(email != (process.env.NEXT_PUBLIC_ADMIN_EMAIL as string)) return;
+                    if(email != (process.env.NEXT_PUBLIC_ADMIN_EMAIL as string)) return setIsValidUser(false);
                     setLoginState({...loginState, loading: true });
 
                     loginUser(email, password).then(()=> {
@@ -83,10 +82,12 @@ export default function Login () {
                 }}
             >
                 Login
-            </Button>}
+            </Button>
+            
             {loginState.message.length > 0 && <Text color={'red.300'}>
                 {loginState.message}
             </Text>}
+            
         </Flex>
     </Flex>
 }
