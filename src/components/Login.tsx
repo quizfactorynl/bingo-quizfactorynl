@@ -1,4 +1,4 @@
-import { API_ROUTES } from "@/lib/constant
+import { API_ROUTES } from "@/lib/constant";
 import { adminsColRef, firebase, signOutUser } from "@/lib/firebase";
 import { Button, Center, Flex, Input, Link, Text } from "@chakra-ui/react";
 import axios from "axios";
@@ -37,6 +37,31 @@ export default function Login () {
     const [email, setEmail] = useState<string>("")
 
 
+
+
+
+
+
+
+ useEffect(()=> setIsValidUser(email == (process.env.NEXT_PUBLIC_ADMIN_EMAIL as string)), [email])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
 
 
     const router = useRouter()
