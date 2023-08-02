@@ -60,6 +60,7 @@ export default function MusicList({ refCode }: { refCode: RefCodeDocType }) {
   
   return ( <Flex
     width={'100%'} height={'100%'} 
+    bg={'var(--bg-gradient)'}
   >
     
     <Flex
@@ -68,8 +69,8 @@ export default function MusicList({ refCode }: { refCode: RefCodeDocType }) {
       flexDirection={"column"}
       width={"100%"}
       height={"100%"}
-      bg={'white'}
       py={'9rem'}
+      bg={'var(--bg-gradient)'}
     >
      
       {/* header */}
@@ -112,7 +113,7 @@ export default function MusicList({ refCode }: { refCode: RefCodeDocType }) {
     
       <Flex
         flex={1}
-        bg={"white"}
+        bg={"transparent"}
         w={"100%"}
         justifyContent={"center"}
         alignItems={"center"}
