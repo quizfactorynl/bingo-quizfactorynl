@@ -172,6 +172,34 @@ const Cards = ({
     setShowMessage(greenCardsState[0].length >= 5)
   }, [greenCardsState[0]])
 
+  
+
+  const [maxH, setMaxH] = useState<number>(-1);
+
+  useEffect(() => {
+    // Function to calculate the maximum height of the cards
+    const updateMaxCardHeight = () => {
+      const cardsElements = document.getElementsByClassName('card-element');
+      let maxHeight = 0;
+
+      for (let i = 0; i < cardsElements.length; i++) {
+        const cardHeight = (cardsElements[i] as HTMLElement).clientHeight;
+        maxHeight = Math.max(maxHeight, cardHeight);
+      }
+
+      setMaxH(maxHeight);
+    };
+
+    // Call the function initially and whenever the window is resized
+    updateMaxCardHeight();
+    window.addEventListener('resize', updateMaxCardHeight);
+
+    // Clean up the event listener on component unmount
+    return () => {
+      window.removeEventListener('resize', updateMaxCardHeight);
+    };
+  }, []);
+
   return (
     <Flex maxW={"1400px"} height={'100%'} overflow={'hidden'}
       flexDir={'column'} 
@@ -224,6 +252,7 @@ const Cards = ({
               alignContent={"center"}
               maxH={isUnder600 ? "150px" : "initial"}
               justifySelf={"center"}
+              minH={maxH > -1 ? maxH : "initial"}
             >
               {isUnder500 ? (
                 <>
