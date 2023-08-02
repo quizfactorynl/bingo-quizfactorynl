@@ -13,7 +13,7 @@ export default function Page() {
   return (
     <MainLayout  mainProps={{
        className: `${montserratFont.className}`
-    }}>
+    }} disableAutoRotate={true}>
       {showList ? (
         <>{refCode && <MusicList refCode={refCode} />} </>
       ) : (

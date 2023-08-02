@@ -176,31 +176,36 @@ const Cards = ({
 
   
 
-  const [maxH, setMaxH] = useState<number>(-1);
-
+  
   useEffect(() => {
     // Function to calculate the maximum height of the cards
     const updateMaxCardHeight = () => {
-      const cardsElements = document.getElementsByClassName('card-element');
+      const cardsElements = document.getElementsByClassName('bingo-card');
       let maxHeight = 0;
 
       for (let i = 0; i < cardsElements.length; i++) {
         const cardHeight = (cardsElements[i] as HTMLElement).clientHeight;
         maxHeight = Math.max(maxHeight, cardHeight);
+        console.log("CardHeight: ", cardHeight, " : ", maxHeight);
       }
-
-      setMaxH(maxHeight);
+      
+      for (let i = 0; i < cardsElements.length; i++) {
+        (cardsElements[i] as HTMLElement).style.minHeight = `${maxHeight}px`;
+      }
+      maxHeight = 0;
     };
-
-    // Call the function initially and whenever the window is resized
-    updateMaxCardHeight();
-    window.addEventListener('resize', updateMaxCardHeight);
+    
+    const unSub = setTimeout(()=> {
+      updateMaxCardHeight();
+    }, 500);
 
     // Clean up the event listener on component unmount
     return () => {
-      window.removeEventListener('resize', updateMaxCardHeight);
+      clearTimeout(unSub)
     };
   }, []);
+
+
 
   return (
     <Flex maxW={"1400px"} height={'100%'} overflow={'hidden'}
@@ -218,6 +223,7 @@ const Cards = ({
         {cards.map((card, index) => (
           <GridItem key={index} colSpan={1}>
             <Flex
+              className="bingo-card"
               bg={
                 greenCardsState[0].includes(card._id as string)
                   ? "#01B902"
@@ -254,7 +260,6 @@ const Cards = ({
               alignContent={"center"}
               maxH={isUnder600 ? "150px" : "initial"}
               justifySelf={"center"}
-              minH={maxH > -1 ? maxH : "initial"}
             >
               {isUnder500 ? (
                 <>
@@ -282,7 +287,7 @@ const Cards = ({
           </GridItem>
         ))}
       </Grid>
-      {showMessage && <Center py={'0.2rem'} mb={'1.3rem'}>
+      {/* {showMessage && <Center py={'0.2rem'} mb={'1.3rem'}>
         <Text color={'blackAlpha.900'} textAlign={'center'} fontSize={'xl'}>
           <Text color={'green.500'} display={'inline-block'} mx={1} fontSize={'xl'} textAlign={'center'}>
             <Icon as={CheckIcon} className="inherit-parent-icon" color={'green.600'}/>
@@ -290,10 +295,9 @@ const Cards = ({
           <CheckIcon />
           Bingo has been Generated
         </Text>
-      </Center>}
+      </Center>} */}
     </Flex>
   );
 };
-
 
 
