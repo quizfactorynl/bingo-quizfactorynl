@@ -11,9 +11,12 @@ export default function Page() {
   const [refCode, setRefCode] = useState<RefCodeDocType | null>(null);
 
   return (
-    <MainLayout  mainProps={{
-       className: `${montserratFont.className}`
-    }} disableAutoRotate={true}>
+    <MainLayout
+      mainProps={{
+        className: `${montserratFont.className}`,
+      }}
+      disableAutoRotate={true}
+    >
       {showList ? (
         <>{refCode && <MusicList refCode={refCode} />} </>
       ) : (

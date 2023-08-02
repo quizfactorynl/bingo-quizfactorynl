@@ -23,7 +23,7 @@ export default function Navbar({
   onAddBtnClick?: () => void;
 }) {
   const router = useRouter();
-  
+
   return (
     <Flex
       w={"100%"}
@@ -91,13 +91,16 @@ export default function Navbar({
           </MenuList>
         </Menu>
 
-        <Button ml={'0.5rem'} colorScheme="red" onClick={()=>{
-          signOutUser().then(()=> window.location.reload())
-        }}>
+        <Button
+          ml={"0.5rem"}
+          colorScheme="red"
+          onClick={() => {
+            signOutUser().then(() => window.location.reload());
+          }}
+        >
           Sign-out
         </Button>
       </Flex>
     </Flex>
   );
 }
-

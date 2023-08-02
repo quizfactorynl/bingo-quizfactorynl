@@ -33,7 +33,7 @@ export default function MusicList({ refCode }: { refCode: RefCodeDocType }) {
   });
 
   const [greenCards, setGreenCards] = useState<string[]>([]);
-  const [bingo, setBingo] = useState<BingoDocType | null>(null)
+  const [bingo, setBingo] = useState<BingoDocType | null>(null);
 
   useEffect(() => {
     setLoader({ loading: true, error: false });
@@ -43,9 +43,9 @@ export default function MusicList({ refCode }: { refCode: RefCodeDocType }) {
         setLoader({ loading: false, error: false });
         setMusics(res.data);
 
-        getDoc(doc(bingosColRef, refCode.bingo_id)).then(d=>{
-          setBingo(d.data() as BingoDocType)
-        })
+        getDoc(doc(bingosColRef, refCode.bingo_id)).then((d) => {
+          setBingo(d.data() as BingoDocType);
+        });
       })
       .catch((err) => {
         setLoader({ loading: false, error: true });
@@ -53,105 +53,95 @@ export default function MusicList({ refCode }: { refCode: RefCodeDocType }) {
   }, []);
 
   if (loader.loading) return <Loader />;
-  
+
   if (loader.error) {
-    return <ErrorPanel errorType="client" />
+    return <ErrorPanel errorType="client" />;
   }
-  
-  return ( <Flex
-    width={'100%'} height={'100%'} 
-    bg={'var(--bg-gradient)'}
-  >
-    
-    {/* Main container */}
-    <Flex
-      justifyContent={"center"}
-      alignItems={"center"}
-      flexDirection={"column"}
-      width={"100%"}
-      height={"100%"}
-      py={'9rem'}
-      bg={'var(--bg-gradient)'}
-    >
-     
-      {/* header */}
-      
-      <Flex
-        width={'100%'}
-        position={'fixed'}
-        top={0}
-        left={0}
-        right={0}
-        height={'8rem'}
-        justifyContent="center" // This centers the child elements horizontally
-        alignItems={'center'}
-      >
-        <img
-          src="./Images/up.png"
-          alt="up-wave"
-          style={{
-            width: '100%',
-            zIndex: -1, // Make sure the image is below the text
-            position: 'absolute', // Set the image position to absolute
-            height: '8rem'
-          }}
-        />
-        <Heading
-          fontWeight={700}
-          fontSize={isUnder600 ? "1.5rem" : "3rem"}
-          textAlign={"center"}
-          mt={"1rem"}
-          textShadow={"dark-lg"}
-          position="relative" // Set the text position to relative to make it sit above the image
-          zIndex={1} // Set the text's z-index to be higher than the image's z-index
-        >
-          {bingo?.title} BINGO
-        </Heading>
-      </Flex>
 
-
-      {/* cards */}
-    
+  return (
+    <Flex width={"100%"} height={"100%"} bg={"var(--bg-gradient)"}>
+      {/* Main container */}
       <Flex
-        flex={1}
-        bg={"transparent"}
-        w={"100%"}
         justifyContent={"center"}
         alignItems={"center"}
+        flexDirection={"column"}
+        width={"100%"}
+        height={"100%"}
+        py={"9rem"}
+        bg={"var(--bg-gradient)"}
       >
-        <Cards cards={musics} greenCardsState={[greenCards, setGreenCards]} />
-      </Flex>
+        {/* header */}
 
-      
+        <Flex
+          width={"100%"}
+          position={"fixed"}
+          top={0}
+          left={0}
+          right={0}
+          height={"8rem"}
+          justifyContent="center" // This centers the child elements horizontally
+          alignItems={"center"}
+        >
+          <img
+            src="./Images/up.png"
+            alt="up-wave"
+            style={{
+              width: "100%",
+              zIndex: -1, // Make sure the image is below the text
+              position: "absolute", // Set the image position to absolute
+              height: "8rem",
+            }}
+          />
+          <Heading
+            fontWeight={700}
+            fontSize={isUnder600 ? "1.5rem" : "3rem"}
+            textAlign={"center"}
+            mt={"1rem"}
+            textShadow={"dark-lg"}
+            position="relative" // Set the text position to relative to make it sit above the image
+            zIndex={1} // Set the text's z-index to be higher than the image's z-index
+          >
+            {bingo?.title} BINGO
+          </Heading>
+        </Flex>
 
-      {/* footer */}
-      
-      <Flex
-        width={'100%'}
-        position={'fixed'}
-        bottom={0}
-        left={0}
-        right={0}
-        height={'8rem'}
-        justifyContent="center" // This centers the child elements horizontally
-        alignItems={'center'}
-      >
-        <img
-          src="./Images/down.png"
-          alt="up-wave"
-          style={{
-            width: '100%',
-            zIndex: -1, // Make sure the image is below the text
-            position: 'absolute', // Set the image position to absolute
-            height: '8rem'
-          }}
-        />
-        <Footer  
-          zIndex={2} position={'relative'} p = {'0.8rem'}
-        />
+        {/* cards */}
+
+        <Flex
+          flex={1}
+          bg={"transparent"}
+          w={"100%"}
+          justifyContent={"center"}
+          alignItems={"center"}
+        >
+          <Cards cards={musics} greenCardsState={[greenCards, setGreenCards]} />
+        </Flex>
+
+        {/* footer */}
+
+        <Flex
+          width={"100%"}
+          position={"fixed"}
+          bottom={0}
+          left={0}
+          right={0}
+          height={"8rem"}
+          justifyContent="center" // This centers the child elements horizontally
+          alignItems={"center"}
+        >
+          <img
+            src="./Images/down.png"
+            alt="up-wave"
+            style={{
+              width: "100%",
+              zIndex: -1, // Make sure the image is below the text
+              position: "absolute", // Set the image position to absolute
+              height: "8rem",
+            }}
+          />
+          <Footer zIndex={2} position={"relative"} p={"0.8rem"} />
+        </Flex>
       </Flex>
-        
-    </Flex>
     </Flex>
   );
 }
@@ -159,7 +149,6 @@ export default function MusicList({ refCode }: { refCode: RefCodeDocType }) {
 const Cards = ({
   cards,
   greenCardsState,
-
 }: {
   cards: MusicDocType[];
   greenCardsState: UseStateProps<string[]>;
@@ -170,17 +159,14 @@ const Cards = ({
 
   const [showMessage, setShowMessage] = useState(false);
 
-  useEffect(()=> {
-    setShowMessage(greenCardsState[0].length >= 5)
-  }, [greenCardsState[0]])
+  useEffect(() => {
+    setShowMessage(greenCardsState[0].length >= 5);
+  }, [greenCardsState[0]]);
 
-  
-
-  
   useEffect(() => {
     // Function to calculate the maximum height of the cards
     const updateMaxCardHeight = () => {
-      const cardsElements = document.getElementsByClassName('bingo-card');
+      const cardsElements = document.getElementsByClassName("bingo-card");
       let maxHeight = 0;
 
       for (let i = 0; i < cardsElements.length; i++) {
@@ -188,28 +174,29 @@ const Cards = ({
         maxHeight = Math.max(maxHeight, cardHeight);
         console.log("CardHeight: ", cardHeight, " : ", maxHeight);
       }
-      
+
       for (let i = 0; i < cardsElements.length; i++) {
         (cardsElements[i] as HTMLElement).style.minHeight = `${maxHeight}px`;
       }
       maxHeight = 0;
     };
-    
-    const unSub = setTimeout(()=> {
+
+    const unSub = setTimeout(() => {
       updateMaxCardHeight();
     }, 500);
 
     // Clean up the event listener on component unmount
     return () => {
-      clearTimeout(unSub)
+      clearTimeout(unSub);
     };
   }, []);
 
-
-
   return (
-    <Flex maxW={"1400px"} height={'100%'} overflow={'hidden'}
-      flexDir={'column'} 
+    <Flex
+      maxW={"1400px"}
+      height={"100%"}
+      overflow={"hidden"}
+      flexDir={"column"}
     >
       <Grid
         templateColumns="repeat(4, 1fr)"
@@ -218,7 +205,7 @@ const Cards = ({
         height={"100%"}
         p={isUnder800 ? "1rem" : "2rem"}
         pt={"5rem"}
-        pb={showMessage ? "2rem" :"5rem"}
+        pb={showMessage ? "2rem" : "5rem"}
       >
         {cards.map((card, index) => (
           <GridItem key={index} colSpan={1}>
@@ -278,7 +265,7 @@ const Cards = ({
                   size={isUnder600 ? "sm" : "md"}
                   textAlign="center"
                   color={"blackAlpha.900"}
-                  fontWeight={'light'}
+                  fontWeight={"light"}
                 >
                   {card.title}
                 </Heading>
@@ -299,5 +286,3 @@ const Cards = ({
     </Flex>
   );
 };
-
-

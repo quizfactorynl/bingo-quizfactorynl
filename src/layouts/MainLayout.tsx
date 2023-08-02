@@ -22,8 +22,9 @@ export default function MainLayout({
     <>
       <Head>
         <title>{pageTitle || "Bingo App"}</title>
-        {disableAutoRotate && 
-          <meta http-equiv="ScreenOrientation" content="autoRotate:disabled" />}
+        {disableAutoRotate && (
+          <meta http-equiv="ScreenOrientation" content="autoRotate:disabled" />
+        )}
         <meta name="description" content={description || "Bingo App"} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="keywords" content={keywords || "Bingo App"} />

@@ -27,24 +27,24 @@ export default function CodeList({ codes }: { codes: RefCodeDocType[] }) {
         margin={"0 auto"}
       >
         {codes.length === 0 && "No reference code found"}
-        {codes.length > 0 && 
-        <Flex
-          width={"100%"}
-          bg={"white"}
-          rounded={"lg"}
-          p={2}
-          flexWrap="wrap"
-          shadow={"dark-lg"}
-        >
-          {codes.map((code, idx) => {
-            return <CodeCard key={idx} code={code} />;
-          })}
-        </Flex>}
+        {codes.length > 0 && (
+          <Flex
+            width={"100%"}
+            bg={"white"}
+            rounded={"lg"}
+            p={2}
+            flexWrap="wrap"
+            shadow={"dark-lg"}
+          >
+            {codes.map((code, idx) => {
+              return <CodeCard key={idx} code={code} />;
+            })}
+          </Flex>
+        )}
       </Flex>
     </Flex>
   );
 }
-
 
 const CodeCard = ({ code }: { code: RefCodeDocType }) => {
   const deleteModelHandler = useDisclosure();
@@ -79,9 +79,9 @@ const CodeCard = ({ code }: { code: RefCodeDocType }) => {
         color="blackAlpha.900"
         flex={1}
         width={{
-          base: '100%',
-          sm: 'calc(50% - 8px)',
-          md: 'calc(50% - 16px)', // Modified to two cards per row on medium-sized screens and above
+          base: "100%",
+          sm: "calc(50% - 8px)",
+          md: "calc(50% - 16px)", // Modified to two cards per row on medium-sized screens and above
         }}
         p={4}
         boxShadow="md"
@@ -91,9 +91,9 @@ const CodeCard = ({ code }: { code: RefCodeDocType }) => {
         display="flex"
         alignItems="center"
         _hover={{
-          cursor: 'pointer',
-          shadow: 'lg',
-          border: '1px solid blackAlpha.600',
+          cursor: "pointer",
+          shadow: "lg",
+          border: "1px solid blackAlpha.600",
         }}
       >
         <IconButton

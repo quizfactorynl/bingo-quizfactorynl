@@ -20,4 +20,3 @@ export interface AdminDocType {
   email: string;
   password: string;
 }
-

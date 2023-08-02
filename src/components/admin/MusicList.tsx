@@ -19,7 +19,7 @@ import {
   useMediaQuery,
   useToast,
   Input,
-  Text
+  Text,
 } from "@chakra-ui/react";
 import { onSnapshot } from "firebase/firestore";
 import { useEffect, useState } from "react";
@@ -66,18 +66,20 @@ export default function MusicList({
       <Flex margin={"0 auto"} maxW={"1400px"} w={"100%"} flexDir={"column"}>
         <Center>
           <Heading fontSize={"xl"}>
-            <Text display={'inline-block'} mr={'0.5rem'} color={'yellow'}>
+            <Text display={"inline-block"} mr={"0.5rem"} color={"yellow"}>
               {bingo && bingo.title}
-            </Text>   
+            </Text>
             Music List
           </Heading>
         </Center>
-        
-        <Flex flexDir={'column'} my={'1rem'} gap={'0.5rem'}>
+
+        <Flex flexDir={"column"} my={"1rem"} gap={"0.5rem"}>
           <Text>Search Music</Text>
-          <Input placeholder="Enter Music title or Artist name"
-            value={filter} onChange={(e) => setFilter(e.target.value)}
-          />  
+          <Input
+            placeholder="Enter Music title or Artist name"
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
+          />
         </Flex>
         <TableContainer
           my={"1rem"}
@@ -99,48 +101,52 @@ export default function MusicList({
             </Thead>
             <Tbody>
               {musics
-              .filter(m=> m.title.toLowerCase().includes(filter.toLowerCase()) || m.artist.toLowerCase().includes(filter.toLowerCase()))
-              .map((music, i) => {
-                return (
-                  <Tr key={i}>
-                    <Td>{music.title}</Td>
-                    <Td>{music.artist}</Td>
-                    <Td>
-                      <Button
-                        color={"blackAlpha.800"}
-                        size={"sm"}
-                        onClick={() => {
-                          setEditItem(music);
-                          onOpen();
-                        }}
-                        isLoading={
-                          loader.target_id === music._id && loader.loading
-                        }
-                      >
-                        <Icon as={EditIcon} className="inherit-parent-icon" />
-                      </Button>
-                      <Button
-                        size={"sm"}
-                        colorScheme="red"
-                        mx={1}
-                        onClick={() => {
-                          setLoader({
-                            target_id: music._id as string,
-                            loading: false,
-                          });
-                          setDeleteItem(music);
-                          deleteModalHandle.onOpen();
-                        }}
-                        isLoading={
-                          loader.target_id === music._id && loader.loading
-                        }
-                      >
-                        <DeleteIcon />
-                      </Button>
-                    </Td>
-                  </Tr>
-                );
-              })}
+                .filter(
+                  (m) =>
+                    m.title.toLowerCase().includes(filter.toLowerCase()) ||
+                    m.artist.toLowerCase().includes(filter.toLowerCase()),
+                )
+                .map((music, i) => {
+                  return (
+                    <Tr key={i}>
+                      <Td>{music.title}</Td>
+                      <Td>{music.artist}</Td>
+                      <Td>
+                        <Button
+                          color={"blackAlpha.800"}
+                          size={"sm"}
+                          onClick={() => {
+                            setEditItem(music);
+                            onOpen();
+                          }}
+                          isLoading={
+                            loader.target_id === music._id && loader.loading
+                          }
+                        >
+                          <Icon as={EditIcon} className="inherit-parent-icon" />
+                        </Button>
+                        <Button
+                          size={"sm"}
+                          colorScheme="red"
+                          mx={1}
+                          onClick={() => {
+                            setLoader({
+                              target_id: music._id as string,
+                              loading: false,
+                            });
+                            setDeleteItem(music);
+                            deleteModalHandle.onOpen();
+                          }}
+                          isLoading={
+                            loader.target_id === music._id && loader.loading
+                          }
+                        >
+                          <DeleteIcon />
+                        </Button>
+                      </Td>
+                    </Tr>
+                  );
+                })}
             </Tbody>
           </Table>
         </TableContainer>
@@ -163,7 +169,6 @@ export default function MusicList({
           axios
             .delete(`${API_ROUTES.MUSICS}/${deleteItem._id}`)
             .then((res) => {
-              console.log(res.data);
               if (res.data.acknowledged) {
                 setMusics((prev) => {
                   return prev.filter((music) => music._id !== deleteItem._id);

@@ -2,8 +2,9 @@ export const API_ROUTES = {
   BINGOS: "/api/administration/bingo",
   MUSICS: "/api/administration/musics",
   RANDOMS_MUSIC: "/api/musics",
-  login: '/api/administration/login',
-  auth: '/api/administration/auth',
+  login: "/api/administration/login",
+  auth: "/api/administration/auth",
+  bingo: "/api/administration/bingo",
 };
 
 export const ROUTES = {

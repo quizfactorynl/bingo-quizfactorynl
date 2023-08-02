@@ -56,7 +56,7 @@ export const firebase: InitializeFirebaseAppType = initializeFirebaseApp();
 
 // collections
 export const musicsColRef = collection(firebase.firebaseStore, "musics");
-export const adminsColRef = collection(firebase.firebaseStore, "admins")
+export const adminsColRef = collection(firebase.firebaseStore, "admins");
 
 // export function uploadBingo (title: string)
 
@@ -166,7 +166,6 @@ export const deleteBingo = (id: string) => {
   return deleteDoc(docRef);
 };
 
-export const signOutUser = ()=> {
-  return fetch("/api/administration/logout")
-}
-
+export const signOutUser = () => {
+  return fetch("/api/administration/logout");
+};

@@ -27,7 +27,8 @@ import ConfirmationModal from "../design/models/ConfirmationModal";
 import { useRouter } from "next/router";
 import BingoModal from "./models/BingoModal";
 import { deleteBingo } from "@/lib/firebase";
-import { ROUTES } from "@/lib/constant";
+import { API_ROUTES, ROUTES } from "@/lib/constant";
+import axios from "axios";
 
 export default function BingoList({
   bingoState,
@@ -63,14 +64,20 @@ export default function BingoList({
         maxW={"1400px"}
         margin={"0 auto"}
       >
-        <Flex width={'100%'} flexDir={'column'} mb={'1rem'} gap={'0.5rem'}>
+        <Flex width={"100%"} flexDir={"column"} mb={"1rem"} gap={"0.5rem"}>
           <Text>Search Bingos</Text>
-          <Input placeholder="Search Bingo" value={filter} onChange={(e)=> setFilter(e.target.value)}/>
+          <Input
+            placeholder="Search Bingo"
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
+          />
         </Flex>
 
-        {bingos.filter(b=> b.title.toLowerCase().includes(filter.toLowerCase())).map((val, idx) => {
-          return <BingoCard key={idx} curr={val} bingoState={bingoState} />;
-        })}
+        {bingos
+          .filter((b) => b.title.toLowerCase().includes(filter.toLowerCase()))
+          .map((val, idx) => {
+            return <BingoCard key={idx} curr={val} bingoState={bingoState} />;
+          })}
       </Flex>
     </Flex>
   );
@@ -90,7 +97,6 @@ export const BingoCard = ({
   const [bingos, setBingos] = bingoState;
   const toast = useToast();
   const router = useRouter();
-
 
   return (
     <Flex
@@ -124,6 +130,7 @@ export const BingoCard = ({
               });
               setLoading(false);
             });
+          axios.delete(`${API_ROUTES.BINGOS}/${(curr as any).id}`);
         }}
       />
       <Text

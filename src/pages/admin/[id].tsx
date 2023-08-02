@@ -9,26 +9,24 @@ import { MusicDocType } from "@/lib/mongodb-schema";
 import Musics from "@/components/admin/Musics";
 import { useRouter } from "next/router";
 
-
-
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const cookie = context.req.headers.cookie || '';
+  const cookie = context.req.headers.cookie || "";
 
   const { id } = context.query;
-  
+
   const res = await fetch(BASE_URL + API_ROUTES.MUSICS + "/" + id, {
     headers: {
       cookie,
-    }
+    },
   });
 
-  if(!res.ok) {
+  if (!res.ok) {
     return {
       redirect: {
         permanent: false,
-        destination: "/login"
-      }
-    }
+        destination: "/login",
+      },
+    };
   }
 
   const musics = await res.json();
@@ -48,7 +46,6 @@ export default function index({
   id: string;
   musics: MusicDocType[];
 }) {
-
   return (
     <MainLayout
       pageTitle="Bingo - Admin"

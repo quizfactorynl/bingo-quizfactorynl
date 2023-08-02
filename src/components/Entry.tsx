@@ -25,8 +25,8 @@ export default function Entry({
     error: false,
   });
 
-  const [isHeightUnder550] = useMediaQuery("(max-height: 550px)")
-  
+  const [isHeightUnder550] = useMediaQuery("(max-height: 550px)");
+
   return (
     <>
       <Flex
@@ -38,7 +38,7 @@ export default function Entry({
         gap={"1rem"}
         p={"1rem"}
       >
-        <Heading textAlign={"center"} fontSize={'xl'}>
+        <Heading textAlign={"center"} fontSize={"xl"}>
           Vul de toegangscode in voor jouw persoonlijke bingokaart
         </Heading>
         <form
@@ -97,7 +97,12 @@ export default function Entry({
         </form>
 
         {/* Footer */}
-        <Footer position={isHeightUnder550 ? "initial" : "fixed"} marginBottom={"2rem"} bottom={0} mt={'2rem'}/>
+        <Footer
+          position={isHeightUnder550 ? "initial" : "fixed"}
+          marginBottom={"2rem"}
+          bottom={0}
+          mt={"2rem"}
+        />
       </Flex>
     </>
   );

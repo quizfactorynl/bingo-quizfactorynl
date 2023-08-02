@@ -8,10 +8,7 @@ import authMiddleware from "@/lib/authMiddleware";
 
 export default authMiddleware(handler);
 
-async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<any>,
-) {
+async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
   if (
     req.method !== "POST" &&
     req.method !== "GET" &&
