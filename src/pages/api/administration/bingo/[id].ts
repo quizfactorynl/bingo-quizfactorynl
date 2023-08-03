@@ -37,6 +37,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
       .status(200)
       .json({ message: `Deleted ${deletedCount} music documents.` });
   } catch (err) {
+    console.log(err);
     res.status(500).end(`Server Error 500`);
   }
 }
