@@ -33,6 +33,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
 
       res.status(200).json(docs);
     } catch (err) {
+      console.log(err)
       res
         .status(500)
         .json({ error: "Server Error", info: JSON.stringify(err) });
@@ -40,7 +41,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
 
     return;
   }
-
+  
   if (req.method == "DELETE") {
     try {
       const { id } = req.query;
@@ -64,6 +65,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
         acknowledged: clientRes.ok,
       });
     } catch (err) {
+      console.log(err)
       res
         .status(500)
         .json({ error: "Server Error", info: JSON.stringify(err) });
@@ -184,6 +186,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
       res: result,
     });
   } catch (err) {
+    console.log(err)
     res.status(500).json({ error: "Server Error", info: JSON.stringify(err) });
   }
 }
