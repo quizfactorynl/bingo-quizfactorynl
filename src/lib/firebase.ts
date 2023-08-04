@@ -97,7 +97,7 @@ export const uploadRefCode = async (
   const res = await getCountFromServer(
     query(bingosColRef, where("id", "==", bingo_id)),
   );
-
+  
   if (res.data().count == 0) {
     onFail("Bingo not found");
     return;
@@ -152,7 +152,7 @@ export const updateBingo = async (
     onFail();
     return;
   }
-
+  
   const docRef = doc(bingosColRef, doc_id);
   await updateDoc(docRef, {
     id: docRef.id,

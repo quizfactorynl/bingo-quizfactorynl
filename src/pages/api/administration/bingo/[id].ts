@@ -24,14 +24,17 @@ async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
     const deleteResult = await musicCollection.deleteMany({ bingo_id: id });
     const deletedCount = deleteResult.deletedCount;
 
-    getDocs(query(refCodeColRef, where("bingo_id", "==", id))).then(
-      (querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          deleteDoc(doc.ref);
-        });
+    const deletePromises = getDocs(query(refCodeColRef, where("bingo_id", "==", id))).then(
+      async (querySnapshot) => {
+        console.log("docs size: ", querySnapshot.size);
+        return Promise.all(querySnapshot.docs.map((doc) => {
+          return deleteDoc(doc.ref);
+        }));
       },
     );
-
+    
+    await deletePromises;
+    
     // Respond with a success message
     res
       .status(200)
