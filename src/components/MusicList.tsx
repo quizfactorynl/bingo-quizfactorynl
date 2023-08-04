@@ -101,7 +101,7 @@ export default function MusicList({ refCode }: { refCode: RefCodeDocType }) {
             position="relative" // Set the text position to relative to make it sit above the image
             zIndex={1} // Set the text's z-index to be higher than the image's z-index
           >
-            {bingo?.title} BINGO
+            {bingo?.title}
           </Heading>
         </Flex>
 
