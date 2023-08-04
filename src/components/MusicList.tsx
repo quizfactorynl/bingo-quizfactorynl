@@ -160,7 +160,7 @@ const Cards = ({
   const [showMessage, setShowMessage] = useState(false);
 
   useEffect(() => {
-    setShowMessage(greenCardsState[0].length >= 5);
+    setShowMessage(greenCardsState[0].length >= 18);
   }, [greenCardsState[0]]);
 
   useEffect(() => {
